@@ -1,0 +1,274 @@
+/* Container styling */
+.gua-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.gua-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 50px auto 0;
+  font-family: 'Montserrat', sans-serif;
+  color: #028d18;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 45px;
+}
+
+/* Page Title */
+.gua-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+/* Full-width separator below title */
+.gua-separator {
+  border: none;
+  border-top: 1px solid #83be07;
+  width: 100%;
+  margin: 20px 0;
+}
+
+/* Table styling for main page */
+.gua-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gua-table thead tr {
+  background: linear-gradient(45deg, #83be07, #028d18);
+}
+
+.gua-table th,
+.gua-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.gua-table th {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Responsive table: hide Product and Purpose on mobile */
+@media (max-width: 768px) {
+  .gua-col-product,
+  .gua-col-purpose {
+    display: none;
+  }
+}
+
+/* Button styling */
+.gua-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  margin-right: 5px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Primary gradient for most buttons */
+.gua-accept-btn,
+.gua-view-btn,
+.gua-submit-btn,
+.gua-close-btn,
+.gua-cancel-btn {
+  background: linear-gradient(45deg, #83be07, #028d18);
+  color: #fff;
+}
+
+/* Hover effect for primary buttons */
+.gua-accept-btn:hover,
+.gua-view-btn:hover,
+.gua-submit-btn:hover,
+.gua-close-btn:hover {
+  background: linear-gradient(140deg, #028d18, #83be07);
+}
+
+/* Decline button - red */
+.gua-decline-btn {
+  background: #f44336;
+  color: #fff;
+}
+
+.gua-decline-btn:hover {
+  background: #d32f2f;
+}
+
+/* Fade disabled buttons */
+.gua-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Notification badge on view button */
+.action-cell {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  background: #f44336;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal overlay */
+.gua-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+/* Modal container with increased width */
+.gua-modal {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+}
+
+/* Modal animation */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-modal {
+  animation: modalFadeIn 0.4s ease-out;
+}
+
+/* Modal title and text */
+.gua-modal-title {
+  font-size: 1.5rem;
+  color: #028d18;
+  margin-bottom: 15px;
+}
+
+.gua-modal-text {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Scrollable details container in modal */
+.details-scroll-container {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 10px;
+}
+
+/* Tables for loan details inside modal */
+.details-table,
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.details-table td,
+.docs-table td,
+.docs-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.details-table tr:nth-child(even),
+.docs-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.details-table tr:hover,
+.docs-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.details-table td:first-child,
+.docs-table th:first-child {
+  font-weight: 600;
+  background: #f3f3f3;
+}
+
+/* Docs table header */
+.docs-table th {
+  background: linear-gradient(45deg, #83be07, #028d18);
+  color: #fff;
+  text-align: left;
+}
+
+/* Modal buttons container */
+.gua-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Loading and error messages */
+.gua-loading,
+.gua-error {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 50px;
+  color: #028d18;
+}
+
+/* Signature canvas container */
+.gua-signature-canvas-container {
+  border: 2px dashed #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  min-height: 150px;
+}
+
+.gua-signature-canvas {
+  width: 100%;
+  height: 150px;
+}
+
+/* Notice for scrolling */
+.scroll-notice {
+  font-size: 0.9rem;
+  color: #f44336;
+  margin-top: 10px;
+}

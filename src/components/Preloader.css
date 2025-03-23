@@ -1,0 +1,53 @@
+/* Preloader.css */
+
+.preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 9999;
+    animation: fadeOutOnly 7s ease forwards; /* Extended fade-out duration to 7s */
+  }
+  
+  /* Extended Fade-out animation */
+  @keyframes fadeOutOnly {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  .preloader-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Scale logo without distortion */
+  .preloader-logo {
+    width: auto;
+    height: auto;
+    max-width: 300px; /* Limit logo width */
+    max-height: 150px; /* Limit logo height */
+    animation: heartbeat 3s ease-in-out infinite; /* Heartbeat animation with extended duration */
+  }
+  
+  /* Heartbeat effect */
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(1.1);
+    }
+  }
+  

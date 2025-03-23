@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Container that centers the login form */
+.lf-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 80%;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Login Form Container */
+.lf-form-container {
+  width: 500px;
+  max-width: 100%;
+  background-color: #fff;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+.lf-logo {
+  width: 60%;
+  max-width: 240px;
+  margin-bottom: 20px;
+}
+
+.lf-title {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #333;
+}
+
+.lf-input-container {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.lf-inputs {
+  width: 100%;
+  padding: 14px;
+  font-size: 14px;
+  border: 1px solid #028d16;
+  border-radius: 25px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin-bottom: 20px;
+  height: 55px;
+}
+
+.lf-inputs:focus {
+  border-color: #82bf06;
+}
+
+.lf-password-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.lf-password-eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  margin-top: -5px;
+}
+
+.lf-password-eye-icon:hover {
+  color: #028d16;
+}
+
+.lf-remember-me-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.lf-checkbox {
+  margin-right: 8px;
+  accent-color: #028d16;
+  width: 16px;
+  height: 16px;
+}
+
+.lf-checkbox-labels {
+  font-size: 14px;
+  color: #333;
+}
+
+.lf-button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(140deg, #7cbb08, #028d18);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.lf-button:hover {
+  background-color: #83be07;
+  transform: scale(1.05);
+}
+
+.lf-forgot-password-text {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+  color: #028d16;
+  margin-left: auto;
+  align-items: center;
+}
+
+.lf-forgot-password-text a {
+  color: #028d16;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.lf-forgot-password-text a:hover {
+  color: #6ca507;
+}
+
+.lf-create-account-text {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #333;
+}
+
+.lf-create-account-link {
+  color: #028d16;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.lf-create-account-link:hover {
+  color: #6ca507;
+}
+
+.lf-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.lf-footer a {
+  color: #028d16;
+  text-decoration: none;
+  margin-left: 5px;
+  transition: color 0.3s ease;
+}
+
+.lf-footer a:hover {
+  color: #6ca507;
+}
+
+.lf-error-message {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: red;
+}
+
+/* Medium Screens (Tablets) */
+@media (max-width: 768px) {
+  .lf-form-container {
+    width: 90%;
+    padding: 30px;
+  }
+
+  .lf-logo {
+    width: 50%;
+  }
+
+  .lf-title {
+    font-size: 20px;
+  }
+
+  .lf-inputs {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .lf-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .lf-forgot-password-text {
+    font-size: 13px;
+  }
+
+  .lf-create-account-text {
+    font-size: 13px;
+  }
+
+  .lf-footer {
+    font-size: 12px;
+  }
+
+  .lf-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+  
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+/* Small Screens (Mobile) */
+@media (max-width: 480px) {
+  .lf-form-container {
+    padding: 20px;
+  }
+
+  .lf-logo {
+    width: 50%;
+  }
+
+  .lf-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .lf-inputs {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .lf-button {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .lf-forgot-password-text {
+    font-size: 12px;
+  }
+
+  .lf-create-account-text {
+    font-size: 12px;
+  }
+
+  .lf-footer {
+    font-size: 12px;
+  }
+}

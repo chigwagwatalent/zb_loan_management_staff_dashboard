@@ -1,0 +1,167 @@
+/* Outer container: page background is restored */
+.cal-container {
+    min-height: 100vh;
+    padding-top: 60px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Calculator card */
+  .cal-card {
+    background-color: #ffffff;
+    padding: 30px 20px;
+    border-radius: 25px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  /* Title */
+  .cal-title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #026d13;
+  }
+  
+  /* Form styling */
+  .cal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .cal-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .cal-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #026d13;
+    font-size: 1rem;
+  }
+  
+  /* Input and select fields with increased border radius */
+  .cal-input,
+  .cal-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #83be07;
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+  }
+  
+  .cal-input:focus,
+  .cal-select:focus {
+    outline: none;
+    border-color: #028d18;
+    box-shadow: 0 0 5px rgba(2, 141, 24, 0.3);
+  }
+  
+  /* Gradient button with pulse animation */
+  .cal-button,
+  .cal-apply-button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(90deg, #83be07, #028d18);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    animation: buttonPulse 2s infinite;
+  }
+  
+  .cal-button:hover,
+  .cal-apply-button:hover {
+    transform: scale(1.05);
+  }
+  
+  @keyframes buttonPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Result section with pop animation */
+  .cal-result {
+    margin-top: 20px;
+    background-color: #e9f7e9;
+    padding: 20px;
+    border-radius: 25px;
+    animation: popIn 0.5s ease-out;
+  }
+  
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  /* Selection step styles */
+  .cal-selection {
+    background-color: #ffffff;
+    padding: 30px 20px;
+    border-radius: 25px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  .cal-selection-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #026d13;
+  }
+  
+  .cal-selection-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .cal-selection-button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(90deg, #83be07, #028d18);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .cal-selection-button:hover {
+    transform: scale(1.05);
+  }
+  
+  .cal-back-button {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    color: #fff;
+    background: linear-gradient(90deg, #83be07, #028d18);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .cal-back-button:hover {
+    transform: scale(1.05);
+  }
+  
+  .cal-error-message {
+    color: red;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  

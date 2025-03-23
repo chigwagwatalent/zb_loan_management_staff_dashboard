@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+.tfa-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  position: relative;
+}
+
+.tfa-box {
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  width: 500px;
+  max-width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+.tfa-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.tfa-otp-input-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tfa-otp-input {
+  width: 55px;
+  height: 50px;
+  text-align: center;
+  font-size: 15px;
+  border: 1px solid #028d16;
+  border-radius: 10px;
+  outline: none;
+  color: #333;
+  background: transparent;
+  transition: border-color 0.3s ease;
+}
+
+.tfa-otp-input:focus {
+  border-color: #82bf06;
+}
+
+.tfa-verify-button {
+  background: linear-gradient(140deg, #83be07, #028d18);
+  color: #fff;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tfa-verify-button:hover {
+  background-color: #83be07;
+}
+
+.tfa-resend-container {
+  margin-top: 15px;
+}
+
+.tfa-resend-timer {
+  color: #333;
+  font-size: 14px;
+}
+
+.tfa-resend-button {
+  background: none;
+  color: #028d16;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.tfa-resend-button:hover {
+  color: #82bf06;
+}
+
+.tfa-error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.tfa-help-button {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  background-color: #fff;
+  color: #028d16;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tfa-help-button:hover {
+  transform: scale(1.1);
+}

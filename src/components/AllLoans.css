@@ -1,0 +1,2465 @@
+/* src/components/AllLoans.css */
+
+/* All Loans Page Styles */
+.allloan-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 10px;
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+
+}
+
+.allloan-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: -1;
+}
+
+.allloan-page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #028d18;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.allloan-title-separator {
+  width: 100%;
+  border-bottom: 1px solid #83be07;
+  margin-bottom: 30px;
+}
+
+/* Loan Table Styles */
+.allloan-loan-table {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.allloan-loan-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.allloan-loan-table th,
+.allloan-loan-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.allloan-loan-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #555;
+}
+
+.allloan-loan-table td {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Completeness Bar Styles */
+.rl-completeness-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rl-completeness-bar {
+  height: 30%; /* Increased height for better visibility */
+  padding: 2%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #83be07, #028d18); /* Gradient background */
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rl-completeness-percentage {
+  color: white;
+  font-weight: 800;
+  font-size: 0.6rem;
+}
+
+/* Completeness Bar in Modal */
+.allloan-modal-contents .rl-completeness-container {
+  gap: 6px;
+}
+
+.allloan-modal-contents .rl-completeness-percentage {
+  font-size: 1rem;
+}
+
+/* Loan Actions Styling */
+.allloan-loan-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* React Select Overrides */
+.allloan-react-select__control {
+  border-color: #028d18;
+  box-shadow: none;
+  border-radius: 24px;
+}
+
+.allloan-react-select__control:hover {
+  border-color: #028d18;
+}
+
+.allloan-react-select__menu {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.allloan-react-select__option--is-focused {
+  background-color: #028d18 !important;
+  color: #ffffff !important;
+}
+
+.allloan-react-select__option--is-selected {
+  background-color: #028d18 !important;
+  color: #ffffff !important;
+}
+
+.allloan-react-select__single-value {
+  color: #028d18;
+}
+
+.allloan-react-select__placeholder {
+  color: #028d18;
+}
+
+.allloan-react-select__dropdown-indicator svg {
+  fill: #028d18;
+}
+
+.allloan-react-select__indicator-separator {
+  display: none;
+}
+
+/* View and Resume Button Styling with Gradient */
+.allloan-view-btn,
+.allloan-resume-button,
+.modal-resume-button {
+  padding: 6px 12px;
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  border-radius: 24px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-left: 20px; /* Increased space between buttons */
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem; /* Consistent font size */
+  min-width: 140px; /* Ensure buttons have same width */
+  text-align: center;
+}
+
+.allloan-view-btn:hover,
+.allloan-resume-button:hover,
+.modal-resume-button:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* "Resume Application" Button Text and Icon */
+.allloan-resume-text {
+  display: inline; /* Visible on larger screens */
+}
+
+.allloan-resume-icon {
+  display: none; /* Hidden on larger screens */
+  margin-left: 8px; /* Space between text and icon */
+  font-size: 16px;
+}
+
+/* Ensure Resume Application Button Text is Visible in Modal */
+.modal-resume-button .allloan-resume-text {
+  display: inline; /* Always show text in modal */
+}
+
+.modal-resume-button .allloan-resume-icon {
+  display: inline; /* Ensure icon is visible */
+}
+
+/* Optional: Adjust spacing if needed */
+.modal-resume-button {
+  margin-top: 20px; /* Increased margin for better spacing */
+}
+
+/* Resume Application Button Responsive Styles */
+@media (max-width: 768px) {
+  /* Hide the text and show the pencil icon in "Resume Application" Button */
+  .allloan-resume-text:not(.modal-resume-button .allloan-resume-text) {
+    display: none; /* Hide text */
+  }
+
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    display: inline; /* Show icon */
+    font-size: 16px; /* Adjust icon size if needed */
+  }
+
+  /* Adjust padding and font size for better alignment */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 120px; /* Adjusted width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  /* Further adjust the icon size on very small screens */
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    font-size: 14px; /* Smaller icon for very small screens */
+  }
+
+  /* Further adjust padding and font size */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    min-width: 100px; /* Adjusted width for very small screens */
+  }
+
+  /* Financial Information Table - Hide Specify, Amount (USD), Maturity Date on Mobile */
+  .allloan-details-table.financial-info th:nth-child(2),
+  .allloan-details-table.financial-info th:nth-child(3),
+  .allloan-details-table.financial-info th:nth-child(4),
+  .allloan-details-table.financial-info td:nth-child(2),
+  .allloan-details-table.financial-info td:nth-child(3),
+  .allloan-details-table.financial-info td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Apply Loan Button with Gradient */
+.allloan-apply-loan-btn {
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.allloan-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* Help Button */
+.allloan-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d18;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allloan-help-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Overlay & Content */
+.allloan-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  z-index: 999;
+  opacity: 0;
+  animation: allloan-fadeOverlayIn 0.3s forwards;
+}
+
+@keyframes allloan-fadeOverlayIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 12px;
+  width: 90%;
+  margin-top: 10%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: allloan-scaleIn 0.3s ease forwards;
+  transform-origin: center center;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+@keyframes allloan-scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #028d18;
+  text-align: center;
+  font-weight: 700;
+}
+
+.allloan-close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #028d18;
+}
+
+.allloan-modal-separator {
+  margin: 10px 0;
+}
+
+/* Loan Details Container & Sections */
+.allloan-loan-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each Section */
+.allloan-loan-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.allloan-loan-section:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.allloan-section-title {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #028d18;
+  text-transform: uppercase;
+  border-bottom: 2px solid #028d18;
+  padding-bottom: 5px;
+}
+
+.allloan-loan-section p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Info Table for Financial Information */
+.allloan-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.allloan-details-table th,
+.allloan-details-table td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.allloan-details-table th {
+  background-color: #e9f7e6;
+  color: #028d18;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.allloan-details-table td {
+  background-color: #fff;
+  vertical-align: middle;
+}
+
+/* NOK Details */
+.allloan-nok-details {
+  margin-bottom: 15px;
+}
+
+.allloan-nok-details h4 {
+  margin-bottom: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .allloan-section-title {
+    font-size: 1.1rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px; /* Adjust width for smaller screens */
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  .allloan-modal-contents .rl-completeness-container {
+    gap: 6px;
+  }
+
+  .allloan-modal-contents .rl-completeness-percentage {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .allloan-page {
+    padding: 60px 15px;
+    margin-left: 0%;
+  }
+
+  .allloan-loan-table {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .allloan-page-title {
+    font-size: 1.5rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 20px;
+  }
+
+  /* Hide less important columns on medium screens */
+  .allloan-loan-table th:nth-child(n+3):not(:last-child),
+  .allloan-loan-table td:nth-child(n+3):not(:last-child) {
+    display: none;
+  }
+
+  /* Only display the last column (Action) */
+  .allloan-loan-table th:last-child,
+  .allloan-loan-table td:last-child {
+    display: table-cell;
+    text-align: center;
+  }
+
+  .allloan-loan-actions {
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .allloan-react-select__control {
+    max-width: 150px;
+    width: 100%;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .allloan-modal-contents {
+    padding: 20px;
+  }
+
+  .allloan-modal-contents h2 {
+    font-size: 1.5rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px;
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  /* Resume Button Responsive Styles */
+  .allloan-resume-text:not(.modal-resume-button .allloan-resume-text) {
+    display: none; /* Hide text */
+  }
+
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    display: inline; /* Show icon */
+    font-size: 16px; /* Adjust icon size if needed */
+  }
+
+  /* Adjust padding and font size for buttons */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 120px; /* Adjusted width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .allloan-loan-table {
+    padding: 10px;
+    margin-left: 0%;
+  }
+
+  .allloan-page-title {
+    font-size: 1.3rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 15px;
+  }
+
+  .allloan-loan-table th,
+  .allloan-loan-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .allloan-page {
+    padding: 50px 10px;
+  }
+
+  .allloan-loan-table {
+    padding: 10px;
+  }
+
+  .allloan-loan-filter {
+    max-width: 120px;
+    font-size: 0.85rem;
+    border-radius: 15px;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .allloan-help-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .allloan-modal-overlay {
+    padding-top: 20px; /* Slightly less padding on very small screens */
+  }
+
+  .allloan-modal-contents {
+    width: 95%;
+    max-width: 95%;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.85rem;
+  }
+
+  .rl-completeness-container {
+    width: 70px;
+  }
+
+  .rl-completeness-bar {
+    height: 12px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.6rem;
+  }
+
+  /* Resume Button Further Responsive Styles for Small Screens */
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    font-size: 14px; /* Smaller icon for very small screens */
+  }
+
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    min-width: 100px; /* Adjusted width for very small screens */
+  }
+
+  /* Financial Information Table - Hide Specify, Amount (USD), Maturity Date on Mobile */
+  .allloan-details-table.financial-info th:nth-child(2),
+  .allloan-details-table.financial-info th:nth-child(3),
+  .allloan-details-table.financial-info th:nth-child(4),
+  .allloan-details-table.financial-info td:nth-child(2),
+  .allloan-details-table.financial-info td:nth-child(3),
+  .allloan-details-table.financial-info td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Apply Loan Button with Gradient */
+.allloan-apply-loan-btn {
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.allloan-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* Help Button */
+.allloan-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d18;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allloan-help-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Overlay & Content */
+.allloan-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  z-index: 999;
+  opacity: 0;
+  animation: allloan-fadeOverlayIn 0.3s forwards;
+}
+
+@keyframes allloan-fadeOverlayIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: allloan-scaleIn 0.3s ease forwards;
+  transform-origin: center center;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+@keyframes allloan-scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #028d18;
+  text-align: center;
+  font-weight: 700;
+}
+
+.allloan-close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #028d18;
+}
+
+.allloan-modal-separator {
+  margin: 10px 0;
+}
+
+/* Loan Details Container & Sections */
+.allloan-loan-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each Section */
+.allloan-loan-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.allloan-loan-section:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.allloan-section-title {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #028d18;
+  text-transform: uppercase;
+  border-bottom: 2px solid #028d18;
+  padding-bottom: 5px;
+}
+
+.allloan-loan-section p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Info Table for Financial Information */
+.allloan-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.allloan-details-table th,
+.allloan-details-table td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.allloan-details-table th {
+  background-color: #e9f7e6;
+  color: #028d18;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.allloan-details-table td {
+  background-color: #fff;
+  vertical-align: middle;
+}
+
+
+
+/* NOK Details */
+.allloan-nok-details {
+  margin-bottom: 15px;
+}
+
+.allloan-nok-details h4 {
+  margin-bottom: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .allloan-section-title {
+    font-size: 1.1rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px; /* Adjust width for smaller screens */
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  .allloan-modal-contents .rl-completeness-container {
+    gap: 6px;
+  }
+
+  .allloan-modal-contents .rl-completeness-percentage {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .allloan-page {
+    padding: 60px 15px;
+    margin-left: 0%;
+  }
+
+  .allloan-loan-table {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .allloan-page-title {
+    font-size: 1.5rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 20px;
+  }
+
+  /* Hide less important columns on medium screens */
+  .allloan-loan-table th:nth-child(n+3):not(:last-child),
+  .allloan-loan-table td:nth-child(n+3):not(:last-child) {
+    display: none;
+  }
+
+  /* Only display the last column (Action) */
+  .allloan-loan-table th:last-child,
+  .allloan-loan-table td:last-child {
+    display: table-cell;
+    text-align: center;
+  }
+
+  .allloan-loan-actions {
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .allloan-react-select__control {
+    max-width: 150px;
+    width: 100%;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .allloan-modal-contents {
+    padding: 20px;
+  }
+
+  .allloan-modal-contents h2 {
+    font-size: 1.5rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px;
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  /* Resume Button Responsive Styles */
+  .allloan-resume-text:not(.modal-resume-button .allloan-resume-text) {
+    display: none; /* Hide text */
+  }
+
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    display: inline; /* Show icon */
+    font-size: 16px; /* Adjust icon size if needed */
+  }
+
+  /* Adjust padding and font size for buttons */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 120px; /* Adjusted width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .allloan-loan-table {
+    padding: 10px;
+    margin-left: 0%;
+  }
+
+  .allloan-page-title {
+    font-size: 1.3rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 15px;
+  }
+
+  .allloan-loan-table th,
+  .allloan-loan-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .allloan-page {
+    padding: 50px 10px;
+  }
+
+  .allloan-loan-table {
+    padding: 10px;
+  }
+
+  .allloan-loan-filter {
+    max-width: 120px;
+    font-size: 0.85rem;
+    border-radius: 15px;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .allloan-help-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .allloan-modal-overlay {
+    padding-top: 20px; /* Slightly less padding on very small screens */
+  }
+
+  .allloan-modal-contents {
+    width: 95%;
+    max-width: 95%;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.85rem;
+  }
+
+  .rl-completeness-container {
+    width: 70px;
+  }
+
+  .rl-completeness-bar {
+    height: 12px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.6rem;
+  }
+
+  /* Resume Button Further Responsive Styles for Small Screens */
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    font-size: 14px; /* Smaller icon for very small screens */
+  }
+
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    min-width: 100px; /* Adjusted width for very small screens */
+  }
+
+  /* Financial Information Table - Hide Specify, Amount (USD), Maturity Date on Mobile */
+  .allloan-details-table.financial-info th:nth-child(2),
+  .allloan-details-table.financial-info th:nth-child(3),
+  .allloan-details-table.financial-info th:nth-child(4),
+  .allloan-details-table.financial-info td:nth-child(2),
+  .allloan-details-table.financial-info td:nth-child(3),
+  .allloan-details-table.financial-info td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Apply Loan Button with Gradient */
+.allloan-apply-loan-btn {
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.allloan-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* Help Button */
+.allloan-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d18;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allloan-help-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Overlay & Content */
+.allloan-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  z-index: 999;
+  opacity: 0;
+  animation: allloan-fadeOverlayIn 0.3s forwards;
+}
+
+@keyframes allloan-fadeOverlayIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: allloan-scaleIn 0.3s ease forwards;
+  transform-origin: center center;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+@keyframes allloan-scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #028d18;
+  text-align: center;
+  font-weight: 700;
+}
+
+.allloan-close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #028d18;
+}
+
+.allloan-modal-separator {
+  margin: 10px 0;
+}
+
+/* Loan Details Container & Sections */
+.allloan-loan-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each Section */
+.allloan-loan-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.allloan-loan-section:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.allloan-section-title {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #028d18;
+  text-transform: uppercase;
+  border-bottom: 2px solid #028d18;
+  padding-bottom: 5px;
+}
+
+.allloan-loan-section p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Info Table for Financial Information */
+.allloan-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.allloan-details-table th,
+.allloan-details-table td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.allloan-details-table th {
+  background-color: #e9f7e6;
+  color: #028d18;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.allloan-details-table td {
+  background-color: #fff;
+  vertical-align: middle;
+}
+
+
+/* NOK Details */
+.allloan-nok-details {
+  margin-bottom: 15px;
+}
+
+.allloan-nok-details h4 {
+  margin-bottom: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .allloan-section-title {
+    font-size: 1.1rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px; /* Adjust width for smaller screens */
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  .allloan-modal-contents .rl-completeness-container {
+    gap: 6px;
+  }
+
+  .allloan-modal-contents .rl-completeness-percentage {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .allloan-page {
+    padding: 60px 15px;
+    margin-left: 0%;
+  }
+
+  .allloan-loan-table {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .allloan-page-title {
+    font-size: 1.5rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 20px;
+  }
+
+  /* Hide less important columns on medium screens */
+  .allloan-loan-table th:nth-child(n+3):not(:last-child),
+  .allloan-loan-table td:nth-child(n+3):not(:last-child) {
+    display: none;
+  }
+
+  /* Only display the last column (Action) */
+  .allloan-loan-table th:last-child,
+  .allloan-loan-table td:last-child {
+    display: table-cell;
+    text-align: center;
+  }
+
+  .allloan-loan-actions {
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .allloan-react-select__control {
+    max-width: 150px;
+    width: 100%;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .allloan-modal-contents {
+    padding: 20px;
+  }
+
+  .allloan-modal-contents h2 {
+    font-size: 1.5rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px;
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  /* Resume Button Responsive Styles */
+  .allloan-resume-text:not(.modal-resume-button .allloan-resume-text) {
+    display: none; /* Hide text */
+  }
+
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    display: inline; /* Show icon */
+    font-size: 16px; /* Adjust icon size if needed */
+  }
+
+  /* Adjust padding and font size for buttons */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 120px; /* Adjusted width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .allloan-loan-table {
+    padding: 10px;
+    margin-left: 0%;
+  }
+
+  .allloan-page-title {
+    font-size: 1.3rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 15px;
+  }
+
+  .allloan-loan-table th,
+  .allloan-loan-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .allloan-page {
+    padding: 50px 10px;
+  }
+
+  .allloan-loan-table {
+    padding: 10px;
+  }
+
+  .allloan-loan-filter {
+    max-width: 120px;
+    font-size: 0.85rem;
+    border-radius: 15px;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .allloan-help-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .allloan-modal-overlay {
+    padding-top: 20px; /* Slightly less padding on very small screens */
+  }
+
+  .allloan-modal-contents {
+    width: 95%;
+    max-width: 95%;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.85rem;
+  }
+
+  .rl-completeness-container {
+    width: 70px;
+  }
+
+  .rl-completeness-bar {
+    height: 12px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.6rem;
+  }
+
+  /* Resume Button Further Responsive Styles for Small Screens */
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    font-size: 14px; /* Smaller icon for very small screens */
+  }
+
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    min-width: 100px; /* Adjusted width for very small screens */
+  }
+
+  /* Financial Information Table - Hide Specify, Amount (USD), Maturity Date on Mobile */
+  .allloan-details-table.financial-info th:nth-child(2),
+  .allloan-details-table.financial-info th:nth-child(3),
+  .allloan-details-table.financial-info th:nth-child(4),
+  .allloan-details-table.financial-info td:nth-child(2),
+  .allloan-details-table.financial-info td:nth-child(3),
+  .allloan-details-table.financial-info td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Apply Loan Button with Gradient */
+.allloan-apply-loan-btn {
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.allloan-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* Help Button */
+.allloan-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d18;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allloan-help-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Overlay & Content */
+.allloan-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  z-index: 999;
+  opacity: 0;
+  animation: allloan-fadeOverlayIn 0.3s forwards;
+}
+
+@keyframes allloan-fadeOverlayIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: allloan-scaleIn 0.3s ease forwards;
+  transform-origin: center center;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+@keyframes allloan-scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #028d18;
+  text-align: center;
+  font-weight: 700;
+}
+
+.allloan-close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #028d18;
+}
+
+.allloan-modal-separator {
+  margin: 10px 0;
+}
+
+/* Loan Details Container & Sections */
+.allloan-loan-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each Section */
+.allloan-loan-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.allloan-loan-section:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.allloan-section-title {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #028d18;
+  text-transform: uppercase;
+  border-bottom: 2px solid #028d18;
+  padding-bottom: 5px;
+}
+
+.allloan-loan-section p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Info Table for Financial Information */
+.allloan-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.allloan-details-table th,
+.allloan-details-table td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.allloan-details-table th {
+  background-color: #e9f7e6;
+  color: #028d18;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.allloan-details-table td {
+  background-color: #fff;
+  vertical-align: middle;
+}
+
+
+
+/* NOK Details */
+.allloan-nok-details {
+  margin-bottom: 15px;
+}
+
+.allloan-nok-details h4 {
+  margin-bottom: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .allloan-section-title {
+    font-size: 1.1rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px; /* Adjust width for smaller screens */
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  .allloan-modal-contents .rl-completeness-container {
+    gap: 6px;
+  }
+
+  .allloan-modal-contents .rl-completeness-percentage {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .allloan-page {
+    padding: 60px 15px;
+    margin-left: 0%;
+  }
+
+  .allloan-loan-table {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .allloan-page-title {
+    font-size: 1.5rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 20px;
+  }
+
+  /* Hide less important columns on medium screens */
+  .allloan-loan-table th:nth-child(n+3):not(:last-child),
+  .allloan-loan-table td:nth-child(n+3):not(:last-child) {
+    display: none;
+  }
+
+  /* Only display the last column (Action) */
+  .allloan-loan-table th:last-child,
+  .allloan-loan-table td:last-child {
+    display: table-cell;
+    text-align: center;
+  }
+
+  .allloan-loan-actions {
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .allloan-react-select__control {
+    max-width: 150px;
+    width: 100%;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .allloan-modal-contents {
+    padding: 20px;
+  }
+
+  .allloan-modal-contents h2 {
+    font-size: 1.5rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px;
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  /* Resume Button Responsive Styles */
+  .allloan-resume-text:not(.modal-resume-button .allloan-resume-text) {
+    display: none; /* Hide text */
+  }
+
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    display: inline; /* Show icon */
+    font-size: 16px; /* Adjust icon size if needed */
+  }
+
+  /* Adjust padding and font size for buttons */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 120px; /* Adjusted width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .allloan-loan-table {
+    padding: 10px;
+    margin-left: 0%;
+  }
+
+  .allloan-page-title {
+    font-size: 1.3rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 15px;
+  }
+
+  .allloan-loan-table th,
+  .allloan-loan-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .allloan-page {
+    padding: 50px 10px;
+  }
+
+  .allloan-loan-table {
+    padding: 10px;
+  }
+
+  .allloan-loan-filter {
+    max-width: 120px;
+    font-size: 0.85rem;
+    border-radius: 15px;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .allloan-help-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .allloan-modal-overlay {
+    padding-top: 20px; /* Slightly less padding on very small screens */
+  }
+
+  .allloan-modal-contents {
+    width: 95%;
+    max-width: 95%;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.85rem;
+  }
+
+  .rl-completeness-container {
+    width: 70px;
+  }
+
+  .rl-completeness-bar {
+    height: 12px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.6rem;
+  }
+
+  /* Resume Button Further Responsive Styles for Small Screens */
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    font-size: 14px; /* Smaller icon for very small screens */
+  }
+
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    min-width: 100px; /* Adjusted width for very small screens */
+  }
+
+  /* Financial Information Table - Hide Specify, Amount (USD), Maturity Date on Mobile */
+  .allloan-details-table.financial-info th:nth-child(2),
+  .allloan-details-table.financial-info th:nth-child(3),
+  .allloan-details-table.financial-info th:nth-child(4),
+  .allloan-details-table.financial-info td:nth-child(2),
+  .allloan-details-table.financial-info td:nth-child(3),
+  .allloan-details-table.financial-info td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Apply Loan Button with Gradient */
+.allloan-apply-loan-btn {
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.allloan-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* Help Button */
+.allloan-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d18;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allloan-help-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Overlay & Content */
+.allloan-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  z-index: 999;
+  opacity: 0;
+  animation: allloan-fadeOverlayIn 0.3s forwards;
+}
+
+@keyframes allloan-fadeOverlayIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: allloan-scaleIn 0.3s ease forwards;
+  transform-origin: center center;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+@keyframes allloan-scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.allloan-modal-contents h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #028d18;
+  text-align: center;
+  font-weight: 700;
+}
+
+.allloan-close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #028d18;
+}
+
+.allloan-modal-separator {
+  margin: 10px 0;
+}
+
+/* Loan Details Container & Sections */
+.allloan-loan-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each Section */
+.allloan-loan-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.allloan-loan-section:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.allloan-section-title {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #028d18;
+  text-transform: uppercase;
+  border-bottom: 2px solid #028d18;
+  padding-bottom: 5px;
+}
+
+.allloan-loan-section p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Info Table for Financial Information */
+.allloan-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.allloan-details-table th,
+.allloan-details-table td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.allloan-details-table th {
+  background-color: #e9f7e6;
+  color: #028d18;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.allloan-details-table td {
+  background-color: #fff;
+  vertical-align: middle;
+}
+
+
+
+/* NOK Details */
+.allloan-nok-details {
+  margin-bottom: 15px;
+}
+
+.allloan-nok-details h4 {
+  margin-bottom: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .allloan-section-title {
+    font-size: 1.1rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px; /* Adjust width for smaller screens */
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  .allloan-modal-contents .rl-completeness-container {
+    gap: 6px;
+  }
+
+  .allloan-modal-contents .rl-completeness-percentage {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .allloan-page {
+    padding: 60px 15px;
+    margin-left: 0%;
+  }
+
+  .allloan-loan-table {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .allloan-page-title {
+    font-size: 1.5rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 20px;
+  }
+
+  /* Hide less important columns on medium screens */
+  .allloan-loan-table th:nth-child(n+3):not(:last-child),
+  .allloan-loan-table td:nth-child(n+3):not(:last-child) {
+    display: none;
+  }
+
+  /* Only display the last column (Action) */
+  .allloan-loan-table th:last-child,
+  .allloan-loan-table td:last-child {
+    display: table-cell;
+    text-align: center;
+  }
+
+  .allloan-loan-actions {
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .allloan-react-select__control {
+    max-width: 150px;
+    width: 100%;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .allloan-modal-contents {
+    padding: 20px;
+  }
+
+  .allloan-modal-contents h2 {
+    font-size: 1.5rem;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.9rem;
+  }
+
+  .rl-completeness-container {
+    width: 80px;
+  }
+
+  .rl-completeness-bar {
+    height: 15px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.9rem;
+  }
+
+  /* Resume Button Responsive Styles */
+  .allloan-resume-text:not(.modal-resume-button .allloan-resume-text) {
+    display: none; /* Hide text */
+  }
+
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    display: inline; /* Show icon */
+    font-size: 16px; /* Adjust icon size if needed */
+  }
+
+  /* Adjust padding and font size for buttons */
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    min-width: 120px; /* Adjusted width for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .allloan-loan-table {
+    padding: 10px;
+    margin-left: 0%;
+  }
+
+  .allloan-page-title {
+    font-size: 1.3rem;
+  }
+
+  .allloan-title-separator {
+    margin-bottom: 15px;
+  }
+
+  .allloan-loan-table th,
+  .allloan-loan-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .allloan-page {
+    padding: 50px 10px;
+  }
+
+  .allloan-loan-table {
+    padding: 10px;
+  }
+
+  .allloan-loan-filter {
+    max-width: 120px;
+    font-size: 0.85rem;
+    border-radius: 15px;
+  }
+
+  .allloan-apply-loan-btn {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .allloan-help-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .allloan-modal-overlay {
+    padding-top: 20px; /* Slightly less padding on very small screens */
+  }
+
+  .allloan-modal-contents {
+    width: 95%;
+    max-width: 95%;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  .allloan-details-table th,
+  .allloan-details-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .allloan-loan-section p {
+    font-size: 0.85rem;
+  }
+
+  .rl-completeness-container {
+    width: 70px;
+  }
+
+  .rl-completeness-bar {
+    height: 12px;
+  }
+
+  .rl-completeness-percentage {
+    font-size: 0.6rem;
+  }
+
+  /* Resume Button Further Responsive Styles for Small Screens */
+  .allloan-resume-icon:not(.modal-resume-button .allloan-resume-icon) {
+    font-size: 14px; /* Smaller icon for very small screens */
+  }
+
+  .allloan-view-btn,
+  .allloan-resume-button,
+  .modal-resume-button {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    min-width: 100px; /* Adjusted width for very small screens */
+  }
+
+  /* Financial Information Table - Hide Specify, Amount (USD), Maturity Date on Mobile */
+  .allloan-details-table.financial-info th:nth-child(2),
+  .allloan-details-table.financial-info th:nth-child(3),
+  .allloan-details-table.financial-info th:nth-child(4),
+  .allloan-details-table.financial-info td:nth-child(2),
+  .allloan-details-table.financial-info td:nth-child(3),
+  .allloan-details-table.financial-info td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Apply Loan Button with Gradient */
+.allloan-apply-loan-btn {
+  background: linear-gradient(140deg, #83be07, #028d18); /* Gradient background */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.allloan-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #7cbb08, #028d18); /* Darker gradient on hover */
+  transform: translateY(-2px);
+}
+
+/* Help Button */
+.allloan-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d18;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.allloan-help-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Close Button Hover Effect */
+.allloan-close-modal-btn:hover {
+  color: #c62828;
+}
+
+/* Error Text Styling */
+.allloan-error-text {
+  color: #c62828;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Scrollbar Styling for Tables (Optional) */
+.allloan-loan-table::-webkit-scrollbar {
+  height: 8px;
+}
+
+.allloan-loan-table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.allloan-loan-table::-webkit-scrollbar-thumb {
+  background: #028d18;
+  border-radius: 4px;
+}
+
+.allloan-loan-table::-webkit-scrollbar-thumb:hover {
+  background: #7cbb08;
+}

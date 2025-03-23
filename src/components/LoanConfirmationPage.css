@@ -1,0 +1,187 @@
+/* src/components/LoanConfirmationPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Full-page container with default background */
+.loan-confirmation-page {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('../images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* OTP Container */
+.otp-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.otp-container h2 {
+  margin-bottom: 20px;
+  color: #026d13;
+}
+
+.otp-inputs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.otp-inputs input {
+  width: 40px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 1px solid #83be07;
+  border-radius: 8px;
+}
+
+.otp-container button {
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(140deg, #83be07, #028d18);
+  color: white;
+  border-radius: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.otp-container button:hover {
+  transform: scale(1.05);
+}
+
+/* Loan Details Container */
+.loan-details-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-width: 900px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.loan-info {
+  margin-bottom: 30px;
+}
+
+.loan-info h2 {
+  margin-bottom: 15px;
+  color: #026d13;
+}
+
+.loan-info p {
+  font-size: 1rem;
+  color: #028d18;
+  margin: 5px 0;
+}
+
+/* Director Response Form */
+.director-response {
+  border-top: 1px solid #7dc142;
+  padding-top: 20px;
+}
+
+.director-response h2 {
+  color: #026d13;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #026d13;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #83be07;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.signature-canvas {
+  border: 2px solid #83be07;
+  border-radius: 12px;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.director-response button {
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(140deg, #83be07, #028d18);
+  color: white;
+  border-radius: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.director-response button:hover {
+  transform: scale(1.05);
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loan-confirmation-page {
+    padding: 15px;
+  }
+  .otp-container,
+  .loan-details-container {
+    padding: 20px 25px;
+  }
+  .otp-inputs input {
+    width: 35px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .otp-container,
+  .loan-details-container {
+    padding: 15px;
+  }
+  .otp-inputs input {
+    width: 30px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  .form-group input {
+    font-size: 0.9rem;
+  }
+  .signature-canvas {
+    height: 150px;
+  }
+}

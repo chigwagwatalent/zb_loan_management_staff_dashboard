@@ -1,0 +1,307 @@
+/* src/components/Sidebar.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* CSS Variables for Sidebar Widths */
+:root {
+  --sidebar-width: 300px;
+  --sidebar-minimized-width: 70px;
+}
+
+/* Apply box-sizing globally for consistency */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Define the bounce animation - no longer used */
+@keyframes bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.1); }
+  50% { transform: scale(1.95); }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.sb-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: linear-gradient(140deg, #028d18 70%, #83be07 100%);
+  color: white;
+  z-index: 2001;
+  transition: width 0.3s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Minimized Sidebar */
+.sb-sidebar.sb-minimized {
+  width: var(--sidebar-minimized-width);
+}
+
+/* Desktop Responsive Styles */
+@media (max-width: 992px) {
+  .sb-sidebar {
+    width: 250px;
+  }
+  .sb-app-logo .sb-logo {
+    width: 150px;
+    height: 70px;
+  }
+  .sb-icon {
+    font-size: 26px;
+    margin-right: 18px;
+  }
+  .sb-sidebar.sb-minimized {
+    width: var(--sidebar-minimized-width);
+  }
+  .sb-sidebar.sb-minimized .sb-icon {
+    font-size: 22px;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .sb-sidebar {
+    width: 60%;
+    max-width: 60%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, width 0.3s ease;
+  }
+  .sb-sidebar.sb-mobile-visible {
+    transform: translateX(0);
+  }
+  /* Overlay covers the remaining 40% of the screen */
+  .sb-overlay {
+    display: none;
+  }
+  .sb-overlay.sb-active {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 60%;
+    width: 40%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+  }
+}
+
+/* Extra small mobile view */
+@media (max-width: 480px) {
+  .sb-sidebar {
+    width: 60%;
+    max-width: 60%;
+  }
+  .sb-app-logo .sb-logo {
+    width: 120px;
+    height: 60px;
+    margin-right: 50px;
+  }
+  .sb-submenu {
+    padding-left: 35px;
+  }
+  .sb-submenu li a {
+    font-size: 13px;
+  }
+  .sb-logout-icon {
+    /* Adjusted for mobile if needed */
+    margin: 30px 10px;
+  }
+  .sb-icon-large {
+    font-size: 35px;
+  }
+}
+
+/* Ensure menu option text stays on one line */
+.sb-sidebar a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.sb-top-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.sb-app-logo .sb-logo {
+  width: 170px;
+  height: 80px;
+  transition: width 0.3s, height 0.3s;
+  margin-top: -5px;
+  margin-right: -10px;
+}
+
+.sb-sidebar.sb-minimized .sb-app-logo .sb-logo {
+  display: none;
+}
+
+.sb-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin: 0;
+}
+
+.sb-close-btn:hover {
+  color: #7dc142;
+}
+
+.sb-toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  margin-top: -8px;
+}
+
+.sb-toggle-btn:hover {
+  color: #7dc142;
+}
+
+.sb-sidebar-separator {
+  margin-bottom: 10%;
+  margin-left: 10%;
+  width: 80%;
+  height: 1px;
+  background-color: white;
+}
+
+.sb-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sb-sidebar li {
+  position: relative;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sb-sidebar li .sb-menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.sb-sidebar a:hover {
+  color: #7dc142;
+}
+
+.sb-sidebar li:hover {
+  color: #7dc142;
+}
+
+.sb-icon {
+  font-size: 28px;
+  margin-right: 20px;
+}
+
+.sb-sidebar.sb-minimized .sb-icon {
+  margin-right: 0;
+  font-size: 24px;
+}
+
+.sb-sidebar.sb-minimized li span {
+  display: none;
+}
+
+.sb-submenu {
+  list-style-type: none;
+  padding-left: 50px;
+  display: none;
+}
+
+.sb-submenu-open {
+  display: block;
+}
+
+.sb-submenu li {
+  padding: 8px 0;
+}
+
+.sb-submenu li a {
+  font-size: 14px;
+}
+
+.sb-submenu li a:hover {
+  color: #ffffff;
+}
+
+/* Logout button moved to bottom center */
+.sb-logout-icon {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sb-icon-large {
+  font-size: 40px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.sb-icon-large:hover {
+  color: #7dc142;
+}
+
+.sb-logout-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sb-logout-button:hover {
+  color: #7dc142;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Unread message badge on the Messages icon */
+.sb-unread-badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.sb-sidebar {
+  overflow-x: hidden;
+}

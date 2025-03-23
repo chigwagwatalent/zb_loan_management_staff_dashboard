@@ -1,0 +1,817 @@
+/* -------------------------------------------------
+   Dashboard.css
+   ------------------------------------------------- */
+
+/* CSS Variables for primary and secondary gradients */
+:root {
+  --primary-gradient: linear-gradient(45deg, #83be07, #028d18);
+  --secondary-gradient: linear-gradient(45deg, #f1c40f, #f39c12);
+}
+
+/* General Styling */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f7f9fc;
+}
+
+.dash-dashboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 90px 20px;
+  min-height: 100vh;
+}
+
+/* Profile Completion Notification */
+.dash-profile-notification {
+  background-color: #7cbb0873;
+  color: #028d18;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: -30px;
+  margin-bottom: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.dash-profile-notification p {
+  margin: 3px 0;
+  font-weight: 600;
+}
+
+/* Responsive Notification Button */
+.dash-complete-profile-button {
+  background: var(--primary-gradient);
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 auto;
+}
+
+.dash-complete-profile-button:hover {
+  background-color: #7cbb08;
+}
+
+/* Welcome Section */
+.dash-welcome-container {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.dash-welcome-message {
+  font-size: 30px;
+  font-weight: 600;
+  color: #028d18;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+/* New Apply for Loan Button positioned at top right */
+.dash-apply-loan-btn {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  transform: translateY(-50%);
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.dash-apply-loan-btn:hover {
+  background: linear-gradient(140deg, #028d18, #83be07);
+}
+
+.dash-welcome-separator {
+  width: 100%;
+  border-bottom: 1px solid #83be07;
+  margin-bottom: 30px;
+}
+
+/* Calculator Button - hidden in new layout because loan calculator is now a stat card */
+.dash-calculator-button {
+  display: none;
+}
+
+/* Statistics Cards Row */
+.dash-statistics-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 30px;
+}
+
+.dash-stat-card {
+  background: var(--primary-gradient);
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  color: #fff;
+  text-align: left;
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dash-stat-card:hover {
+  transform: scale(1.03);
+  background: linear-gradient(140deg, #028d18, #83be07);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dash-card-icon {
+  font-size: 3rem;
+  color: #ffffff;
+}
+
+.dash-card-text p {
+  margin: 5px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.dash-stat-card h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.dash-stat-card h5 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 200;
+  margin-left: 10px;
+}
+
+/* Loan Calculator Card uses secondary gradient */
+.dash-loan-calculator-card {
+  background: #83be07;
+  cursor: pointer;
+}
+
+/* Announcement Card (Row 2) */
+.dash-announcement-card {
+  background: var(--primary-gradient);
+  border-radius: 45px;
+  text-align: center;
+  padding: 1%;
+  color: #fff;
+  font-size: 12px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.dash-announcement-card:hover {
+  transform: scale(1.03);
+  background: linear-gradient(140deg, #028d18, #83be07);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.dash-announcement-card h4 {
+  margin: 5px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.dash-announcement-card p {
+  margin: 0;
+  line-height: 35px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Announcement Shadow Text Animation */
+.announcement-shadow-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.1);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: shadowMove 10s linear infinite;
+}
+
+@keyframes shadowMove {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Calendar Card (Row 2) - Modified */
+.dash-calendar-card {
+  background: transparent; /* Removed background */
+  border-radius: 25px;
+  padding: 10px;
+  flex: 1;
+  min-width: 300px;
+  height: 350px;
+}
+
+/* Containers for mobile reordering */
+.dash-announcement-container,
+.dash-calendar-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+/* Shared Row Layout for Desktop */
+.dash-layout-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+/* Ensure cards in shared rows take roughly 48% width on larger screens */
+.dash-layout-row > .dash-card,
+.dash-layout-row > .dash-running-applications-table,
+.dash-layout-row > .dash-running-loans-table,
+.dash-layout-row > .dash-loan-products,
+.dash-layout-row > .dash-faq-card {
+  flex: 1 1 48%;
+  min-width: 300px;
+}
+
+.dash-loan-products {
+  flex: 1 1 48%;
+  min-width: 300px;
+  margin-top: 70px;
+}
+
+.dash-running-applications-table {
+  flex: 1 1 48%;
+  min-width: 300px;
+  margin-top: 60px;
+}
+
+/* Running Applications & Running Loans Tables */
+.dash-running-applications-table,
+.dash-running-loans-table {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  padding: 10px 25px;
+  border-radius: 12px;
+}
+
+.dash-styled-table {
+  margin: 0 auto;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 10px;
+  border-collapse: collapse;
+}
+
+.dash-styled-table th, .dash-styled-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.dash-styled-table th {
+  background-color: #f2f2f2;
+  color: #83be07;
+  font-weight: 600;
+}
+
+.dash-styled-table td {
+  color: #028d18;
+  font-size: 0.95rem;
+}
+
+/* FAQ Section (Row 4) */
+.dash-faq-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  color: #028d18;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.dash-faq-card h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.dash-faq-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.dash-faq-item:last-child {
+  border-bottom: none;
+}
+
+.dash-faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.dash-faq-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.dash-faq-answer {
+  padding: 10px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Separator Element */
+.separator {
+  width: 100%;
+  height: 2px;
+  background-color: #83be07;
+  margin: 10px 0 20px;
+}
+
+/* Progress Bar */
+.dash-completeness-container {
+  position: relative;
+  width: 100%;
+  background-color: #e0e0de;
+  border-radius: 4px;
+  height: 20px;
+}
+
+.dash-completeness-bar {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.dash-completeness-percentage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #000;
+}
+
+.dash-completeness-bar.red {
+  background-color: #f44336;
+}
+
+.dash-completeness-bar.yellow {
+  background-color: #ffeb3b;
+}
+
+.dash-completeness-bar.green {
+  background-color: #4caf50;
+}
+
+/* Resume Button */
+.dash-resume-button {
+  padding: 12px 20px;
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.dash-resume-button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Pop-up Overlays and Containers */
+.dash-popup-overlay,
+.dash-calculator-popup-overlay,
+.dash-schedule-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3500;
+}
+
+.dash-popup,
+.dash-calculator-popup,
+.dash-schedule-popup {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 800px;
+  width: 90%;
+  padding: 20px 30px;
+  position: relative;
+  animation: popIn 0.5s ease forwards;
+}
+
+.dash-popup h2,
+.dash-schedule-popup h2 {
+  color: #028d18;
+  margin-bottom: 15px;
+}
+
+.dash-popup p,
+.dash-schedule-popup p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.dash-apply-button {
+  background: linear-gradient(140deg, #028d18, #83be07);
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+.dash-apply-button:hover {
+  background-color: #83be07;
+}
+
+.dash-close-button {
+  background-color: #ccc;
+  color: #333;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.dash-close-button:hover {
+  background-color: #999;
+}
+
+/* Calculator Popup Specifics */
+.dash-calculator-popup {
+  width: 40%;
+}
+
+.dash-calculator-container {
+  padding: 20px;
+  background: none;
+  box-shadow: none;
+}
+
+.dash-calculator-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  background: var(--primary-gradient);
+  border: none;
+  font-size: 2rem;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.dash-calculator-close-button:hover {
+  transform: scale(1.1);
+}
+
+/* Calendar Customization */
+.dash-custom-calendar {
+  margin: 0 auto;
+  border: none;
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 100%;
+}
+
+.react-calendar__tile {
+  color: #028d18;
+}
+
+.react-calendar__tile--now {
+  background: #83be07;
+  color: #fff;
+  border-radius: 100%;
+}
+
+.react-calendar__tile--active {
+  background: #028d18;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.dash-highlight-date {
+  background: var(--primary-gradient) !important;
+  color: #fff !important;
+  border-radius: 50%;
+  animation: glow 1.5s infinite alternate, bounceDate 0.8s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 5px #83be07; }
+  to { box-shadow: 0 0 20px #83be07; }
+}
+
+@keyframes bounceDate {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.dash-upcoming-date {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #028d18;
+  font-weight: 600;
+}
+
+/* Floating Help Button */
+.dash-help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #028d16;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.dash-help-button:hover {
+  transform: scale(1.1);
+}
+
+/* Pop-up Focus Styles */
+.dash-popup:focus {
+  outline: 2px solid #028d18;
+}
+
+/* Slide In/Out Transitions */
+.dash-slide-in {
+  animation: slide-in 0.5s forwards;
+  opacity: 1;
+}
+.dash-slide-out {
+  animation: slide-out 0.5s forwards;
+  opacity: 0;
+}
+@keyframes slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slide-out {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0; }
+}
+
+/* Accordion Section for Loan Products */
+.dash-accordion {
+  width: 100%;
+  max-width: 1300px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-top: -30px;
+}
+
+.dash-accordion-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.dash-accordion-header {
+  background: var(--primary-gradient);
+  color: #fff;
+  cursor: pointer;
+  padding: 16px 20px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-accordion-header:hover,
+.dash-accordion-header:focus {
+  background-color: #d6f5d6;
+  transform: scale(1.02);
+}
+
+.dash-accordion-header::after {
+  content: '\25BC';
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.dash-accordion-item.active .dash-accordion-header::after {
+  transform: rotate(180deg);
+}
+
+.dash-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 1%;
+  margin-top: 10px;
+}
+
+.dash-accordion-item.active .dash-accordion-content {
+  max-height: 500px;
+}
+
+.dash-accordion-content .dash-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* New Product Row Layout for Loan Products */
+.dash-product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-accordion-content .dash-product-item {
+  background-color: #f0fff0;
+  color: #028d18;
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dash-accordion-content .dash-product-item:hover {
+  background-color: #ffffff;
+  transform: scale(1.02);
+}
+
+.dash-accordion-content .dash-apply-button {
+  background-color: #028d18;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dash-accordion-content .dash-apply-button:hover {
+  background-color: #83be07;
+  transform: translateY(-2px);
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 1024px) {
+  .dash-announcement-card,
+  .dash-calendar-card {
+    min-width: 300px;
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile reordering is achieved via separate container sections (see JS) */
+
+  .dash-custom-calendar {
+    width: 420px;
+    padding: 20px;
+  }
+  
+  .dash-profile-notification {
+    margin-top: -40px;
+    margin-bottom: 50px;
+  }
+  
+  .dash-complete-profile-button {
+    margin: 0 auto;
+  }
+  
+  .dash-accordion-header {
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+  
+  .dash-accordion-content .dash-product-item,
+  .dash-accordion-content .dash-apply-button {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+  
+  .dash-styled-table {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  /* Increase top margins on Running Loans and FAQs */
+  .dash-running-loans-table {
+    margin-top: 80px;
+  }
+  .dash-faq-card {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-accordion-header {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+  }
+  
+  .dash-accordion-content .dash-product-item,
+  .dash-accordion-content .dash-apply-button {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+  
+  .dash-popup {
+    padding: 15px 20px;
+  }
+  
+  .dash-popup h2 {
+    font-size: 20px;
+  }
+  
+  .dash-popup p,
+  .dash-apply-button, 
+  .dash-close-button {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+  
+  /* On mobile, hide the Product column in Running Loans table */
+  .dash-running-loans-table th:first-child,
+  .dash-running-loans-table td:first-child {
+      display: none;
+  }
+}

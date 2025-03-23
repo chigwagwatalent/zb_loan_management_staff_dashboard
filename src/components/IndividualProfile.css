@@ -1,0 +1,381 @@
+/* src/components/IndividualProfile.css (Slick & Modern) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* Reset & Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background: #f7f7f7;
+}
+
+/* Main Container */
+.ip-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Form Container */
+.ip-profile-form-container {
+  background: rgba(255, 255, 255, 0.92);
+  width: 100%;
+  max-width: 1000px;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Page Title */
+.ip-page-titles {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #028d18;
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Profile Card */
+.profile-card {
+  background: #fff;
+  border-left: 5px solid #028d18;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.profile-card p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Fetched ZB Accounts */
+.ip-fetched-zb-accounts {
+  margin-top: 15px;
+}
+
+.ip-fetched-zb-accounts h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #028d18;
+  margin-bottom: 10px;
+}
+
+.ip-fetched-zb-accounts ul {
+  list-style: none;
+}
+
+.ip-fetched-zb-accounts li {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.ip-fetched-zb-accounts li:hover {
+  background: rgba(2, 141, 24, 0.1);
+}
+
+/* Accordion (Settings) */
+.ip-accordion-item {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+.ip-accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.ip-accordion-header h3 {
+  font-size: 1.4rem;
+  color: #028d18;
+}
+
+.ip-accordion-toggle {
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(45deg, #83be07, #028d18);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  transition: background 0.3s ease;
+}
+
+.ip-accordion-toggle:hover {
+  background: #026d13;
+}
+
+.ip-accordion-content {
+  padding: 10px 0;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Settings Items */
+.ip-settings-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Switch */
+.ip-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  margin-right: 15px;
+}
+
+.ip-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ip-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 26px;
+}
+
+.ip-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.ip-switch input:checked + .ip-slider {
+  background-color: #028d18;
+}
+
+.ip-switch input:checked + .ip-slider:before {
+  transform: translateX(24px);
+}
+
+/* Settings Description */
+.ip-settings-description h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: #028d18;
+}
+
+.ip-settings-description p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Change Password Button */
+.ip-change-password-button {
+  background: linear-gradient(45deg, #83be07, #028d18);
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.ip-change-password-button:hover {
+  background: #83be07;
+}
+
+/* Popup Overlay & Popup */
+.ip-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ip-popup {
+  background: #fff;
+  width: 90%;
+  max-width: 500px;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  position: relative;
+  animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.ip-popup h2 {
+  color: #028d18;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* Form Group in Popup */
+.ip-form-group {
+  margin-bottom: 15px;
+}
+
+.ip-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.ip-form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #028d16;
+  border-radius: 25px;
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.ip-form-group input:focus {
+  border-color: #82bf06;
+}
+
+/* Password Input */
+.ip-password-input {
+  position: relative;
+}
+
+.ip-password-input input {
+  padding-right: 45px;
+}
+
+.ip-toggle-visibility {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #028d18;
+}
+
+/* Popup Buttons */
+.ip-popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.ip-apply-button,
+.ip-close-button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.ip-apply-button {
+  background-color: #028d18;
+  color: #fff;
+}
+
+.ip-apply-button:hover {
+  background-color: #83be07;
+}
+
+.ip-close-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.ip-close-button:hover {
+  background-color: #999;
+}
+
+/* Responsive Styles */
+/* For screens up to 768px */
+@media (max-width: 768px) {
+  .ip-profile-form-container {
+    padding: 30px 20px;
+  }
+  .ip-page-titles {
+    font-size: 1.6rem;
+  }
+  .profile-card {
+    padding: 15px;
+  }
+  .ip-fetched-zb-accounts h3 {
+    font-size: 1.4rem;
+  }
+  .ip-popup {
+    padding: 20px 30px;
+  }
+}
+
+/* For screens up to 480px */
+@media (max-width: 480px) {
+  .ip-profile-form-container {
+    padding: 20px 15px;
+  }
+  .ip-page-titles {
+    font-size: 1.4rem;
+  }
+  .profile-card {
+    padding: 10px;
+  }
+  .ip-fetched-zb-accounts h3 {
+    font-size: 1.2rem;
+  }
+  .ip-popup {
+    width: 95%;
+    padding: 15px 20px;
+  }
+  .ip-apply-button,
+  .ip-close-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
