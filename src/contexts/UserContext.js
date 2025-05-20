@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
 
         // Fetch the current user data from the API
         const response = await axios.get(
-          'http://localhost:8080/v1/api/clients/current-user'
+          'http://10.132.229.140:8080/v1/api/clients/current-user'
         );
 
         // Update the user state with the fetched data
@@ -114,7 +114,7 @@ export const UserProvider = ({ children }) => {
 
       // Send POST request to logout endpoint with Authorization header
       await axios.post(
-        'http://localhost:8080/v1/api/client-logout',
+        'http://10.132.229.140:8080/v1/api/client-logout',
         {},
         {
           headers: {

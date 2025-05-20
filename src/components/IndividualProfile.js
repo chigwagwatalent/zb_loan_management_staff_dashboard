@@ -33,10 +33,12 @@ function IndividualProfile() {
         setLoading(false);
         return;
       }
+      // Sanitize nationalId by removing any special characters (e.g., hyphens)
+      const sanitizedNationalId = user.nationalId.replace(/[^a-zA-Z0-9]/g, '');
       try {
         const response = await axios.post(
-          'http://localhost:8080/v1/api/account-lookup',
-          { nationalId: user.nationalId },
+          'http://10.132.229.140:8080/v1/api/account-lookup',
+          { nationalId: sanitizedNationalId },
           {
             headers: {
               'Content-Type': 'application/json',
@@ -64,7 +66,7 @@ function IndividualProfile() {
     try {
       if (!twoFactorEnabled) {
         const response = await axios.put(
-          `http://localhost:8080/v1/api/otp-status/${user.clientId}`,
+          `http://10.132.229.140:8080/v1/api/otp-status/${user.clientId}`,
           { otpStatus: true },
           { headers: { Authorization: `Bearer ${sessionToken}` } }
         );
@@ -73,7 +75,7 @@ function IndividualProfile() {
         }
       } else {
         const response = await axios.put(
-          `http://localhost:8080/v1/api/otp-status/${user.clientId}`,
+          `http://10.132.229.140:8080/v1/api/otp-status/${user.clientId}`,
           { otpStatus: false },
           { headers: { Authorization: `Bearer ${sessionToken}` } }
         );
@@ -126,7 +128,7 @@ function IndividualProfile() {
     }
     try {
       const response = await axios.put(
-        `http://localhost:8080/v1/api/verify-password-update/${user.clientId}`,
+        `http://10.132.229.140:8080/v1/api/verify-password-update/${user.clientId}`,
         { oldPassword: passwordData.oldPassword, newPassword: passwordData.newPassword },
         { headers: { Authorization: `Bearer ${sessionToken}` } }
       );

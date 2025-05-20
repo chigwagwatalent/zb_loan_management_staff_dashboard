@@ -44,7 +44,7 @@ const LoginForm = () => {
 
     try {
       // Use the new staff login endpoint
-      const response = await fetch('http://localhost:8080/v1/api/auth/staff-login', {
+      const response = await fetch('http://10.132.229.140:8080/v1/api/auth/staff-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

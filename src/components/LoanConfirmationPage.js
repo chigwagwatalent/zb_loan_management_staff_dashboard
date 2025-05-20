@@ -29,7 +29,7 @@ const LoanConfirmationPage = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:8080/v1/api/corporate-loans/loan-details/by-loan/${loanId}`);
+      const response = await axios.get(`http://10.132.229.140:8080/v1/api/corporate-loans/loan-details/by-loan/${loanId}`);
       setLoanDetails(response.data);
     } catch (error) {
       console.error('Error fetching loan details:', error);
@@ -63,7 +63,7 @@ const LoanConfirmationPage = () => {
     };
 
     try {
-      await axios.post('http://localhost:8080/v1/api/corporate-loans/director-signature/add', payload);
+      await axios.post('http://10.132.229.140:8080/v1/api/corporate-loans/director-signature/add', payload);
       alert('Confirmation submitted successfully.');
     } catch (error) {
       console.error('Error submitting director confirmation:', error);

@@ -1,7 +1,8 @@
 /* Outer container: page background is restored */
 .cal-container {
-    min-height: 100vh;
+    min-height: 10vh;
     padding-top: 60px;
+    border-radius: 35px;
     background-size: cover;
     background-position: center;
     display: flex;

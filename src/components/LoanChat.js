@@ -60,7 +60,7 @@ const LoanChat = () => {
     const fetchClientDetails = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/v1/api/clients/${user.clientId}/details`
+          `http://10.132.229.140:8080/v1/api/clients/${user.clientId}/details`
         );
         setClientDetails(data);
       } catch (error) {
@@ -79,7 +79,7 @@ const LoanChat = () => {
       if (!user || !user.applicationId) return;
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/v1/api/loan-applications/status/${user.applicationId}`
+          `http://10.132.229.140:8080/v1/api/loan-applications/status/${user.applicationId}`
         );
         // If status has changed compared to last poll...
         if (loanStatusPrevRef.current !== data.status) {
@@ -89,7 +89,7 @@ const LoanChat = () => {
           if (data.status === 'APPROVED') {
             try {
               const { data: scheduleData } = await axios.get(
-                `http://localhost:8080/v1/api/loan-applications/loan-schedule/${user.clientId}`
+                `http://10.132.229.140:8080/v1/api/loan-applications/loan-schedule/${user.clientId}`
               );
               messageText = generateNotificationMessage(scheduleData);
             } catch (error) {

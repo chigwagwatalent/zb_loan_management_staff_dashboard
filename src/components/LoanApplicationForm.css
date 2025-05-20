@@ -73,7 +73,7 @@ input[type=number] {
 .sla-step-circle {
   width: 40px;
   height: 40px;
-  border: 2px solid #7dc142;
+  border: 1px solid #7dc142;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@ input[type=number] {
 
 .sla-step-circle.sla-active,
 .sla-step-circle.sla-completed {
-  background-color: #7dc142;
+  background: linear-gradient(140deg, #83be07, #028d18);
   color: white;
   transform: scale(1.1);
 }
@@ -98,7 +98,7 @@ input[type=number] {
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #7dc142;
+  background: linear-gradient(140deg, #83be07, #028d18);
   color: white;
   padding: 5px 10px;
   border-radius: 5px;

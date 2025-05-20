@@ -54,7 +54,7 @@ const TwoFactorAuth = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/v1/api/verify-otp',
+        'http://10.132.229.140:8080/v1/api/verify-otp',
         { username, otp: otp.join('') },
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -115,7 +115,7 @@ const TwoFactorAuth = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/v1/api/resend-otp',
+        'http://10.132.229.140:8080/v1/api/resend-otp',
         { username },
         { headers: { 'Content-Type': 'application/json' } }
       );

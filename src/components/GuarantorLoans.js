@@ -41,7 +41,7 @@ const GuarantorLoans = () => {
     if (!staffId || !sessionToken) return;
     const fetchGuarantorLoans = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/v1/api/staff-loans/guarantor-loans/${staffId}`, {
+        const response = await fetch(`http://10.132.229.140:8080/v1/api/staff-loans/guarantor-loans/${staffId}`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${sessionToken}`,
@@ -66,7 +66,7 @@ const GuarantorLoans = () => {
   const handleViewClick = async (loan) => {
     setSelectedLoan(loan);
     try {
-      const response = await fetch(`http://localhost:8080/v1/api/staff-loans/loan-details/${loan.loanId}`, {
+      const response = await fetch(`http://10.132.229.140:8080/v1/api/staff-loans/loan-details/${loan.loanId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken}`,
@@ -103,7 +103,7 @@ const GuarantorLoans = () => {
   const handleDetailsDecline = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/v1/api/staff-loans/${selectedLoan.loanId}/guarantor/${staffId}/decline`,
+        `http://10.132.229.140:8080/v1/api/staff-loans/${selectedLoan.loanId}/guarantor/${staffId}/decline`,
         {},
         {
           headers: {
@@ -136,7 +136,7 @@ const GuarantorLoans = () => {
   const handleSignatureSubmit = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/v1/api/staff-loans/${selectedLoan.loanId}/guarantor/${staffId}/accept`,
+        `http://10.132.229.140:8080/v1/api/staff-loans/${selectedLoan.loanId}/guarantor/${staffId}/accept`,
         {},
         {
           headers: {

@@ -3,24 +3,25 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { FaBell, FaBars, FaTimes } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import confetti from 'canvas-confetti';
 import { UserContext } from '../contexts/UserContext';
 import './TopBar.css';
 
 const TopBar = ({ toggleSidebar, isSidebarOpen, isMobile }) => {
-  const { user, logoutUser } = useContext(UserContext);
+  const { user, sessionToken, logoutUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [currentDateTime, setCurrentDateTime] = useState('');
-  const [notificationCount, setNotificationCount] = useState(0);
-  const [notifications, setNotifications] = useState([]);
-  const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [inviteCount, setInviteCount] = useState(0);
+  const [invites, setInvites] = useState([]);
+  const [isInvitationDropdownOpen, setIsInvitationDropdownOpen] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [selectedInvite, setSelectedInvite] = useState(null);
 
-  const notificationRef = useRef(null);
+  const invitationRef = useRef(null);
   const profileRef = useRef(null);
-  const topbarRef = useRef(null);
 
-  // Update current date/time every second.
+  // Update current date/time every second
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
@@ -31,70 +32,86 @@ const TopBar = ({ toggleSidebar, isSidebarOpen, isMobile }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Poll the guarantor loans endpoint every 10 seconds to fetch loans with null "guarantorDecision".
+  // Poll the "invited" endpoint every 10 seconds
   useEffect(() => {
-    const fetchGuarantorLoans = async () => {
-      if (!user || !user.staffId) return;
+    const fetchInvites = async () => {
+      if (!user?.staffId || !sessionToken) return;
       try {
-        const response = await axios.get(
-          `http://localhost:8080/v1/api/staff-loans/guarantor-loans/${user.staffId}`
+        const { data } = await axios.get(
+          `http://10.132.229.140:8080/v1/api/staff-loans/invited/${user.staffId}`,
+          { headers: { Authorization: `Bearer ${sessionToken}` } }
         );
-        // Filter loans that require a decision.
-        const unattendedLoans = response.data.filter(
-          (loan) => loan.guarantorDecision === null
-        );
-        setNotifications(unattendedLoans);
-        setNotificationCount(unattendedLoans.length);
-      } catch (error) {
-        console.error('Error fetching guarantor loans:', error);
+        if (data.message === 'No loan invited') {
+          setInvites([]);
+          setInviteCount(0);
+        } else {
+          setInvites([data]);
+          setInviteCount(1);
+        }
+      } catch (err) {
+        console.error('Error fetching loan invitations:', err);
       }
     };
 
-    fetchGuarantorLoans();
-    const intervalId = setInterval(fetchGuarantorLoans, 10000);
-    return () => clearInterval(intervalId);
-  }, [user]);
+    fetchInvites();
+    const timer = setInterval(fetchInvites, 10000);
+    return () => clearInterval(timer);
+  }, [user, sessionToken]);
 
-  // Toggle the notification dropdown.
-  const toggleNotificationDropdown = () => {
-    setIsNotificationDropdownOpen((prev) => !prev);
+  // Toggle the invitation dropdown
+  const toggleInvitationDropdown = () => {
+    setIsInvitationDropdownOpen(open => !open);
   };
 
-  // Toggle the profile dropdown.
-  const toggleProfileDropdown = () => {
-    setIsProfileDropdownOpen((prev) => !prev);
-  };
-
-  // Close dropdowns when clicking outside.
+  // Close dropdowns/modals when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        notificationRef.current &&
-        !notificationRef.current.contains(event.target)
-      ) {
-        setIsNotificationDropdownOpen(false);
+    const handleClickOutside = e => {
+      if (invitationRef.current && !invitationRef.current.contains(e.target)) {
+        setIsInvitationDropdownOpen(false);
       }
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setIsProfileDropdownOpen(false);
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setIsInviteModalOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () =>
-      document.removeEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Navigate to the Guarantor Loans page when the notification button is clicked.
-  const openGuarantorLoans = () => {
-    navigate('/guarantor-loans');
+  // Open modal, clear invites, and fire green confetti
+  const openInviteModal = invite => {
+    setSelectedInvite(invite);
+    setIsInviteModalOpen(true);
+    setIsInvitationDropdownOpen(false);
+    setInvites([]);
+    setInviteCount(0);
+    // green confetti celebration
+    confetti({
+      particleCount: 150,
+      spread: 80,
+      origin: { y: 0.5 },
+      colors: ['#83be07', '#028d18']
+    });
   };
 
-  // Handle logout.
-  const handleLogout = () => {
-    logoutUser();
+  const closeInviteModal = () => {
+    setSelectedInvite(null);
+    setIsInviteModalOpen(false);
   };
+
+  // Navigate to application form at Step 2, clear invites
+  const handleApply = loan => {
+    setInvites([]);
+    setInviteCount(0);
+    navigate('/loan-application', {
+      state: { selectedProduct: loan, startStep: 2 }
+    });
+  };
+
+  // Handle logout
+  const handleLogout = () => logoutUser();
 
   return (
-    <div className="tb-topbar" ref={topbarRef}>
+    <div className="tb-topbar">
       <div className="tb-left-section">
         {isMobile && (
           <button
@@ -106,80 +123,107 @@ const TopBar = ({ toggleSidebar, isSidebarOpen, isMobile }) => {
           </button>
         )}
       </div>
+
       <div className="tb-right-section">
-        <div className="tb-datetime" aria-label="Current date and time">
-          {currentDateTime}
-        </div>
+        <div className="tb-datetime">{currentDateTime}</div>
+
+        {/* Invitation Bell */}
         <div
           className="tb-notification-icon"
-          ref={notificationRef}
-          onClick={toggleNotificationDropdown}
-          aria-label="Notifications"
+          ref={invitationRef}
+          onClick={toggleInvitationDropdown}
+          aria-label="Loan Invitations"
           role="button"
           tabIndex={0}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') toggleNotificationDropdown();
-          }}
+          onKeyPress={e => e.key === 'Enter' && toggleInvitationDropdown()}
         >
           <FaBell />
-          {notificationCount > 0 && (
-            <span className="tb-notification-badge">{notificationCount}</span>
+          {inviteCount > 0 && (
+            <span className="tb-notification-badge">{inviteCount}</span>
           )}
-          {isNotificationDropdownOpen && (
+          {isInvitationDropdownOpen && (
             <div className="tb-notification-dropdown tb-active" role="menu">
               <ul>
-                {notifications.length > 0 ? (
-                  notifications.map((loan) => (
-                    <li key={loan.loanId}>
-                      <span>
-                        Guarantor decision pending for Loan #{loan.loanId} –{' '}
-                        {loan.loanProductName}
-                      </span>
-                      <button
-                        className="tb-view-button"
-                        onClick={openGuarantorLoans}
-                      >
-                        Open Guarantor Loans
-                      </button>
+                {invites.length > 0 ? (
+                  invites.map(inv => (
+                    <li key={inv.id}>
+                      <p>
+                        🎉 Dear {user.fullName}, you have been invited to apply for a new loan product with amount range{' '}
+                        💰 {inv.minAmount} – {inv.maxAmount} 💰.
+                      </p>
+                      <div className="tb-modal-buttons">
+                        <button
+                          className="tb-view-button"
+                          onClick={() => openInviteModal(inv)}
+                        >
+                          Details
+                        </button>
+                        <button
+                          className="tb-apply-button bounce"
+                          onClick={() => handleApply(inv)}
+                        >
+                          Apply Now 🚀
+                        </button>
+                      </div>
                     </li>
                   ))
                 ) : (
-                  <li>No new notifications</li>
+                  <li>No new invitations</li>
                 )}
               </ul>
             </div>
           )}
         </div>
+
+        {/* Profile */}
         <div
           className="tb-profile-section"
           ref={profileRef}
-          onClick={toggleProfileDropdown}
           aria-label="User profile"
           role="button"
           tabIndex={0}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') toggleProfileDropdown();
-          }}
         >
           <img src="/1.png" alt="Profile" className="tb-profile-pic" />
-          {isProfileDropdownOpen && (
-            <div className="tb-dropdown-menu tb-active" role="menu">
-              <ul>
-                <div className='sb-logout-button'> 
-                <li>
-                  <Link to="/profile" >Profile</Link>
-                </li>
-                </div>
-                <li>
-                  <button onClick={handleLogout} className="sb-logout-button">
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+          <div className="tb-dropdown-menu">
+            <ul>
+              <li><Link to="/profile">Profile</Link></li>
+              <li>
+                <button onClick={handleLogout} className="sb-logout-button">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+
+      {/* Invitation Modal */}
+      {isInviteModalOpen && selectedInvite && (
+        <div className="tb-invite-modal-overlay">
+          <div className="tb-invite-modal">
+            <h2>🎊 Loan Invitation Details 🎊</h2>
+            <p><strong>Code:</strong> {selectedInvite.loanProductCode}</p>
+            <p><strong>Name:</strong> {selectedInvite.name}</p>
+            <p><strong>Description:</strong> {selectedInvite.description}</p>
+            <p>
+              <strong>Amount Range:</strong> {selectedInvite.minAmount} – {selectedInvite.maxAmount}
+            </p>
+            <p><strong>Interest Rate:</strong> {selectedInvite.interestRate}%</p>
+
+            <div className="tb-modal-buttons">
+              <button
+                className="tb-apply-button bounce"
+                onClick={() => handleApply(selectedInvite)}
+              >
+                Apply Now 🚀
+              </button>
+              <button onClick={closeInviteModal}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

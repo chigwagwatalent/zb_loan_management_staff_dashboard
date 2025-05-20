@@ -59,7 +59,7 @@ const ResetPasswordOTP = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post('http://localhost:8080/v1/api/verify-reset-otp', {
+      const response = await axios.post('http://10.132.229.140:8080/v1/api/verify-reset-otp', {
         username: email,
         otp: enteredOtp,
       });
@@ -88,7 +88,7 @@ const ResetPasswordOTP = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/v1/api/forgot-password', {
+      const response = await axios.post('http://10.132.229.140:8080/v1/api/forgot-password', {
         username: email,
       });
 

@@ -45,7 +45,7 @@ const Sidebar = ({ isMobile, isSidebarOpen, toggleSidebar, onToggleSidebarWidth 
       if (!user || !user.applicationId) return;
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/v1/api/loan-applications/status/${user.applicationId}`
+          `http://10.132.229.140:8080/v1/api/loan-applications/status/${user.applicationId}`
         );
         // If status has changed, update the unread messages count.
         if (prevLoanStatusRef.current !== data.status) {

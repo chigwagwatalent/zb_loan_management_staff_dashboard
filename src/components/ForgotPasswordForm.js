@@ -29,7 +29,7 @@ const ForgotPasswordForm = () => {
     setIsLoading(true); // Start loading
 
     try {
-      const response = await axios.post('http://localhost:8080/v1/api/forgot-password', { username: email });
+      const response = await axios.post('http://10.132.229.140:8080/v1/api/forgot-password', { username: email });
 
       if (response.status === 200) {
         // Successful OTP sent

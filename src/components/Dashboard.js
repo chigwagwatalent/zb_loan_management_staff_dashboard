@@ -110,7 +110,7 @@ const Dashboard = () => {
       if (user?.staffId) {
         try {
           const response = await fetch(
-            `http://localhost:8080/v1/api/staff-loans/staff/${user.staffId}/details`,
+            `http://10.132.229.140:8080/v1/api/staff-loans/staff/${user.staffId}/details`,
             { headers: { Authorization: `Bearer ${sessionToken}` } }
           );
           if (!response.ok)
@@ -124,7 +124,7 @@ const Dashboard = () => {
               if (!applicationId) return { ...loan, completeness: 0 };
               try {
                 const detailRes = await fetch(
-                  `http://localhost:8080/v1/api/staff-loans/loan-details/${applicationId}`,
+                  `http://10.132.229.140:8080/v1/api/staff-loans/loan-details/${applicationId}`,
                   { headers: { Authorization: `Bearer ${sessionToken}` } }
                 );
                 if (!detailRes.ok)
@@ -169,7 +169,7 @@ const Dashboard = () => {
           if (!applicationId) return;
           try {
             const response = await axios.get(
-              `http://localhost:8080/v1/api/loan-applications/loan-schedule/${applicationId}`,
+              `http://10.132.229.140:8080/v1/api/loan-applications/loan-schedule/${applicationId}`,
               { headers: { Authorization: `Bearer ${sessionToken}` } }
             );
             let loanSchedules = response.data;
@@ -266,7 +266,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStaffLoanProducts = async () => {
       try {
-        const res = await fetch('http://localhost:8080/v1/api/loan-products', {
+        const res = await fetch('http://10.132.229.140:8080/v1/api/loan-products', {
           headers: { Authorization: `Bearer ${sessionToken}` },
         });
         if (!res.ok) throw new Error('Failed to fetch loan products');

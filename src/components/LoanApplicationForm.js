@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+// src/components/StaffLoanApplicationForm.jsx
+import React, { useState, useContext, useEffect } from 'react'; 
 import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
@@ -18,24 +19,30 @@ const StaffLoanApplicationForm = () => {
   const [loanProducts, setLoanProducts] = useState([]);
   const [selectedLoanProduct, setSelectedLoanProduct] = useState(null);
 
-  // Data for staff loan application
+  // Data for staff loan application; added netSalary for step 2
   const [staffLoanData, setStaffLoanData] = useState({
     loanAmount: '',
     repaymentAccount: '',
     disbursementAccount: '',
+    repaymentSchedule: '',
+    currencyId: '',
+    tenureDuration: '',
+    netSalary: '',
     // Step 3 fields:
     purpose: '',
-    guarantorRequired: true, // Switch on by default
+    guarantorRequired: true,
     guarantorId: '',
     annualBasicSalary: '',
     approverId: '',
     // Step 4 fields:
     loanAgreementAccepted: false,
     currentOrSavingsAccount: '',
-    // We'll use an object for supportingDocuments so keys can vary
     supportingDocuments: {},
     securityDetails: ''
   });
+
+  // State for maximum allowed loan in step 2
+  const [maxAllowedLoan, setMaxAllowedLoan] = useState(null);
 
   // Guarantor and Approver list fetched from API
   const [guarantors, setGuarantors] = useState([]);
@@ -48,6 +55,127 @@ const StaffLoanApplicationForm = () => {
   const [errors, setErrors] = useState({});
   // Show success popup state
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+  // New state to hold fetched accounts from the lookup endpoint
+  const [fetchedAccounts, setFetchedAccounts] = useState({});
+  // States to track if the user wishes to enter an account manually
+  const [repaymentAccountManual, setRepaymentAccountManual] = useState(false);
+  const [disbursementAccountManual, setDisbursementAccountManual] = useState(false);
+
+  // New state to hold the list of currencies fetched from the API
+  const [currencies, setCurrencies] = useState([]);
+
+  // Fetch loan products and filter for staff loans
+  useEffect(() => {
+    const fetchLoanProducts = async () => {
+      try {
+        const response = await axios.get('http://10.132.229.140:8080/v1/api/loan-products', {
+          headers: { Authorization: `Bearer ${sessionToken}` },
+        });
+        if (response.status === 200) {
+          const staffProducts = response.data.filter(p => p.clientType === 'STAFF');
+          setLoanProducts(staffProducts);
+        }
+      } catch (error) {
+        console.error('Error fetching loan products:', error);
+      }
+    };
+    fetchLoanProducts();
+  }, [sessionToken]);
+
+  // Fetch accounts for Repayment and Disbursement using the nationalId from local storage or user context
+  useEffect(() => {
+    const storedNationalId = localStorage.getItem("nationalId") || user?.nationalId;
+    if (storedNationalId) {
+      const sanitizedNationalId = storedNationalId.replace(/[^a-zA-Z0-9]/g, '');
+      axios.post(
+        'http://10.132.229.140:8080/v1/api/account-lookup',
+        { nationalId: sanitizedNationalId },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${sessionToken}`,
+          },
+        }
+      )
+      .then(response => {
+        setFetchedAccounts(response.data || {});
+      })
+      .catch(err => {
+        console.error("Error fetching accounts:", err);
+      });
+    }
+  }, [sessionToken, user]);
+
+  // Fetch currencies for the new currency selection field
+  useEffect(() => {
+    const fetchCurrencies = async () => {
+      try {
+        const response = await axios.get('http://10.132.229.140:8080/v1/api/currencies');
+        if (response.status === 200) {
+          setCurrencies(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching currencies:', error);
+      }
+    };
+    fetchCurrencies();
+  }, []);
+
+  // When step 3 is active, fetch guarantors and approvers for the current staff
+  useEffect(() => {
+    if (currentStep === 3 && user && user.staffId) {
+      const fetchStaffOptions = async () => {
+        try {
+          const response = await axios.get(
+            `http://10.132.229.140:8080/v1/api/staff-loans/guarantors/${user.staffId}`,
+            { headers: { Authorization: `Bearer ${sessionToken}` } }
+          );
+          if (response.status === 200) {
+            setGuarantors(response.data);
+            setApprovers(response.data);
+          }
+        } catch (error) {
+          console.error('Error fetching staff options:', error);
+        }
+      };
+      fetchStaffOptions();
+    }
+  }, [currentStep, user, sessionToken]);
+
+  // Compute maxAllowedLoan whenever netSalary or tenureDuration changes
+  useEffect(() => {
+    const salary = parseFloat(staffLoanData.netSalary);
+    const tenure = parseInt(staffLoanData.tenureDuration, 10);
+    if (salary > 0 && tenure > 0) {
+      const annualRate = 0.15;
+      const monthlyRate = annualRate / 12;
+      const pow = Math.pow(1 + monthlyRate, tenure);
+      const factor = (pow - 1) / (monthlyRate * pow);
+      const maxMonthlyRepayment = 0.7 * salary;
+      const maxLoanVal = factor * maxMonthlyRepayment;
+      setMaxAllowedLoan(maxLoanVal);
+    } else {
+      setMaxAllowedLoan(null);
+    }
+  }, [staffLoanData.netSalary, staffLoanData.tenureDuration]);
+
+  // Update form if navigating from resume or with a selected product from dashboard
+  useEffect(() => {
+    if (location.state) {
+      if (location.state.fromResume && location.state.loanDetails) {
+        const resumeData = location.state.loanDetails;
+        setStaffLoanData(prev => ({ ...prev, ...resumeData }));
+        const step = determineStep(resumeData);
+        setCurrentStep(step);
+      } else if (location.state.selectedProduct) {
+        setSelectedLoanProduct(location.state.selectedProduct);
+        if (location.state.startStep) {
+          setCurrentStep(location.state.startStep);
+        }
+      }
+    }
+  }, [location.state]);
 
   // Helper function to determine the correct step to resume from
   const determineStep = (loanDetails) => {
@@ -108,62 +236,6 @@ const StaffLoanApplicationForm = () => {
     }
   };
 
-  // Update form if navigating from resume or with a selected product from dashboard
-  useEffect(() => {
-    if (location.state) {
-      if (location.state.fromResume && location.state.loanDetails) {
-        const resumeData = location.state.loanDetails;
-        setStaffLoanData(prev => ({ ...prev, ...resumeData }));
-        const step = determineStep(resumeData);
-        setCurrentStep(step);
-      } else if (location.state.selectedProduct) {
-        setSelectedLoanProduct(location.state.selectedProduct);
-        if (location.state.startStep) {
-          setCurrentStep(location.state.startStep);
-        }
-      }
-    }
-  }, [location.state]);
-
-  // Fetch loan products and filter for staff loans
-  useEffect(() => {
-    const fetchLoanProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/v1/api/loan-products', {
-          headers: { Authorization: `Bearer ${sessionToken}` },
-        });
-        if (response.status === 200) {
-          const staffProducts = response.data.filter(p => p.clientType === 'STAFF');
-          setLoanProducts(staffProducts);
-        }
-      } catch (error) {
-        console.error('Error fetching loan products:', error);
-      }
-    };
-    fetchLoanProducts();
-  }, [sessionToken]);
-
-  // When step 3 is active, fetch guarantors and approvers for the current staff
-  useEffect(() => {
-    if (currentStep === 3 && user && user.staffId) {
-      const fetchStaffOptions = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:8080/v1/api/staff-loans/guarantors/${user.staffId}`,
-            { headers: { Authorization: `Bearer ${sessionToken}` } }
-          );
-          if (response.status === 200) {
-            setGuarantors(response.data);
-            setApprovers(response.data);
-          }
-        } catch (error) {
-          console.error('Error fetching staff options:', error);
-        }
-      };
-      fetchStaffOptions();
-    }
-  }, [currentStep, user, sessionToken]);
-
   // Handle updates to staffLoanData
   const handleChange = (field, value) => {
     setStaffLoanData(prev => ({ ...prev, [field]: value }));
@@ -192,6 +264,10 @@ const StaffLoanApplicationForm = () => {
       loanAmount: '',
       repaymentAccount: '',
       disbursementAccount: '',
+      repaymentSchedule: '',
+      currencyId: '',
+      tenureDuration: '',
+      netSalary: '',
       purpose: '',
       guarantorRequired: true,
       guarantorId: '',
@@ -204,6 +280,9 @@ const StaffLoanApplicationForm = () => {
     });
     setTermsAccepted(false);
     setErrors({});
+    setRepaymentAccountManual(false);
+    setDisbursementAccountManual(false);
+    setMaxAllowedLoan(null);
   };
 
   // ---------- STEP 1: Select Loan Product ----------
@@ -218,7 +297,15 @@ const StaffLoanApplicationForm = () => {
 
   // ---------- STEP 2: Application Starts ----------
   const submitStep2 = async () => {
-    if (!staffLoanData.loanAmount || !staffLoanData.repaymentAccount || !staffLoanData.disbursementAccount) {
+    if (
+      !staffLoanData.currencyId ||
+      !staffLoanData.netSalary ||
+      !staffLoanData.tenureDuration ||
+      !staffLoanData.loanAmount ||
+      !staffLoanData.repaymentSchedule ||
+      !staffLoanData.repaymentAccount ||
+      !staffLoanData.disbursementAccount
+    ) {
       setErrors(prev => ({ ...prev, step2: 'Please fill in all required fields.' }));
       return;
     }
@@ -228,11 +315,15 @@ const StaffLoanApplicationForm = () => {
         applicationId: applicationId,
         staffId: user.staffId || 1,
         loanProductId: selectedLoanProduct.id,
+        currencyId: staffLoanData.currencyId,
+        netSalary: parseFloat(staffLoanData.netSalary),
+        tenureDuration: parseInt(staffLoanData.tenureDuration, 10),
         loanAmount: parseFloat(staffLoanData.loanAmount),
+        repaymentSchedule: staffLoanData.repaymentSchedule,
         repaymentAccount: staffLoanData.repaymentAccount,
         disbursementAccount: staffLoanData.disbursementAccount
       };
-      const response = await axios.put('http://localhost:8080/v1/api/staff-loans/step1', payload, {
+      const response = await axios.put('http://10.132.229.140:8080/v1/api/staff-loans/step1', payload, {
         headers: { Authorization: `Bearer ${sessionToken}` },
       });
       const newApplicationId = response?.data?.applicationId;
@@ -272,7 +363,7 @@ const StaffLoanApplicationForm = () => {
         annualBasicSalary: parseFloat(staffLoanData.annualBasicSalary),
         approverId: parseInt(staffLoanData.approverId, 10)
       };
-      const endpoint = `http://localhost:8080/v1/api/staff-loans/${applicationId}/step2`;
+      const endpoint = `http://10.132.229.140:8080/v1/api/staff-loans/${applicationId}/step2`;
       const response = await axios.put(endpoint, payload, {
         headers: { Authorization: `Bearer ${sessionToken}` },
       });
@@ -291,7 +382,6 @@ const StaffLoanApplicationForm = () => {
       setErrors(prev => ({ ...prev, step4: 'Please fill in the current account and security details.' }));
       return;
     }
-    // Validate each required document
     const requiredDocs = getRequiredDocuments();
     for (let doc of requiredDocs) {
       if (doc.required && !staffLoanData.supportingDocuments[doc.key]) {
@@ -310,7 +400,7 @@ const StaffLoanApplicationForm = () => {
         supportingDocuments: staffLoanData.supportingDocuments,
         securityDetails: staffLoanData.securityDetails
       };
-      const endpoint = `http://localhost:8080/v1/api/staff-loans/${applicationId}/step3`;
+      const endpoint = `http://10.132.229.140:8080/v1/api/staff-loans/${applicationId}/step3`;
       const response = await axios.put(endpoint, payload, {
         headers: { Authorization: `Bearer ${sessionToken}` },
       });
@@ -331,7 +421,7 @@ const StaffLoanApplicationForm = () => {
     }
     setErrors(prev => ({ ...prev, step5: '' }));
     try {
-      const endpoint = `http://localhost:8080/v1/api/staff-loans/${applicationId}/accept-terms?accepted=true`;
+      const endpoint = `http://10.132.229.140:8080/v1/api/staff-loans/${applicationId}/accept-terms?accepted=true`;
       const response = await axios.patch(endpoint, null, {
         headers: { Authorization: `Bearer ${sessionToken}` },
       });
@@ -381,6 +471,7 @@ const StaffLoanApplicationForm = () => {
   );
 
   // ---------- RENDERING EACH STEP ----------
+
   const renderStep1 = () => (
     <div>
       <h2>Step 1: Select Loan Product</h2>
@@ -410,7 +501,7 @@ const StaffLoanApplicationForm = () => {
           <p><strong>Name:</strong> {selectedLoanProduct.name}</p>
           <p><strong>Description:</strong> {selectedLoanProduct.description}</p>
           <p>
-            <strong>Amount:</strong> {selectedLoanProduct.currencyCode}{' '}
+            <strong>Limits:</strong> {selectedLoanProduct.currencyCode}{' '}
             {Number(selectedLoanProduct.minAmount).toLocaleString()} - {selectedLoanProduct.currencyCode}{' '}
             {Number(selectedLoanProduct.maxAmount).toLocaleString()}
           </p>
@@ -422,49 +513,183 @@ const StaffLoanApplicationForm = () => {
     </div>
   );
 
-  const renderStep2 = () => (
-    <div>
-      <h2>Step 2: Application Starts</h2>
-      <div className="sla-separator" />
-      {selectedLoanProduct && (
-        <p>
-          <strong>Selected Product:</strong> {selectedLoanProduct.name}
-        </p>
-      )}
-      {errors.step2 && <p className="sla-error">{errors.step2}</p>}
-      <div className="sla-form-group">
-        <label htmlFor="loanAmount">Loan Amount:</label>
-        <input
-          type="number"
-          id="loanAmount"
-          value={staffLoanData.loanAmount}
-          onChange={(e) => handleChange('loanAmount', e.target.value)}
-        />
+  const renderStep2 = () => {
+    const selectedCurrency = currencies.find(c => c.id.toString() === staffLoanData.currencyId)?.code;
+    const filteredAccounts = Object.entries(fetchedAccounts).filter(([currency, account]) => {
+      return selectedCurrency ? currency === selectedCurrency : true;
+    });
+
+    return (
+      <div>
+        <h2>Step 2: Application Starts</h2>
+        <div className="sla-separator" />
+        {selectedLoanProduct && (
+          <p>
+            <strong>Selected Product:</strong> {selectedLoanProduct.name}
+          </p>
+        )}
+        {errors.step2 && <p className="sla-error">{errors.step2}</p>}
+
+        {/* Currency Selection */}
+        <div className="sla-form-group">
+          <label htmlFor="currency">Currency:</label>
+          <select
+            id="currency"
+            value={staffLoanData.currencyId}
+            onChange={(e) => handleChange('currencyId', e.target.value)}
+          >
+            <option value="">Select Currency</option>
+            {currencies.map(currency => (
+              <option key={currency.id} value={currency.id}>
+                {currency.code} - {currency.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Net Salary */}
+        <div className="sla-form-group">
+          <label htmlFor="netSalary">Net Salary:</label>
+          <input
+            type="number"
+            id="netSalary"
+            value={staffLoanData.netSalary}
+            onChange={(e) => handleChange('netSalary', e.target.value)}
+          />
+        </div>
+
+        {/* Tenure Duration */}
+        <div className="sla-form-group">
+          <label htmlFor="tenureDuration">Tenure (Months):</label>
+          <input
+            type="number"
+            id="tenureDuration"
+            value={staffLoanData.tenureDuration}
+            onChange={(e) => handleChange('tenureDuration', e.target.value)}
+          />
+        </div>
+
+        {/* Loan Amount */}
+        <div className="sla-form-group">
+          <label htmlFor="loanAmount">Loan Amount:</label>
+          <input
+            type="number"
+            id="loanAmount"
+            value={staffLoanData.loanAmount}
+            onChange={(e) => {
+              const { value } = e.target;
+              if (value === '') {
+                handleChange('loanAmount', '');
+                return;
+              }
+              const num = parseFloat(value);
+              if (maxAllowedLoan && num > maxAllowedLoan) {
+                handleChange('loanAmount', maxAllowedLoan.toFixed(2));
+              } else {
+                handleChange('loanAmount', value);
+              }
+            }}
+            max={maxAllowedLoan ? maxAllowedLoan.toFixed(2) : undefined}
+          />
+        </div>
+
+        {/* Display maximum allowed */}
+        {maxAllowedLoan !== null && (
+          <p style={{ marginTop: '5px', fontStyle: 'italic' }}>
+            Maximum allowed loan: {selectedCurrency || ''} {maxAllowedLoan.toFixed(2)}
+          </p>
+        )}
+
+        {/* Repayment Schedule */}
+        <div className="sla-form-group">
+          <label htmlFor="repaymentSchedule">Repayment Schedule:</label>
+          <select
+            id="repaymentSchedule"
+            value={staffLoanData.repaymentSchedule}
+            onChange={(e) => handleChange('repaymentSchedule', e.target.value)}
+          >
+            <option value="">Select Repayment Schedule</option>
+            <option value="WEEKLY">Weekly</option>
+            <option value="MONTHLY">Monthly</option>
+            <option value="YEARLY">Yearly</option>
+          </select>
+        </div>
+
+        {/* Repayment Account */}
+        <div className="sla-form-group">
+          <label htmlFor="repaymentAccount">Repayment Account:</label>
+          {Object.keys(fetchedAccounts).length > 0 && !repaymentAccountManual ? (
+            <select
+              id="repaymentAccount"
+              value={staffLoanData.repaymentAccount}
+              onChange={(e) => {
+                if (e.target.value === "manual") {
+                  setRepaymentAccountManual(true);
+                  handleChange('repaymentAccount', '');
+                } else {
+                  handleChange('repaymentAccount', e.target.value);
+                }
+              }}
+            >
+              <option value="">Select Repayment Account</option>
+              {filteredAccounts.map(([currency, account]) => (
+                <option key={currency} value={account}>
+                  {currency}: {account}
+                </option>
+              ))}
+              <option value="manual">Other (Enter manually)</option>
+            </select>
+          ) : (
+            <input
+              type="text"
+              id="repaymentAccount"
+              value={staffLoanData.repaymentAccount}
+              onChange={(e) => handleChange('repaymentAccount', e.target.value)}
+            />
+          )}
+        </div>
+
+        {/* Disbursement Account */}
+        <div className="sla-form-group">
+          <label htmlFor="disbursementAccount">Disbursement Account:</label>
+          {Object.keys(fetchedAccounts).length > 0 && !disbursementAccountManual ? (
+            <select
+              id="disbursementAccount"
+              value={staffLoanData.disbursementAccount}
+              onChange={(e) => {
+                if (e.target.value === "manual") {
+                  setDisbursementAccountManual(true);
+                  handleChange('disbursementAccount', '');
+                } else {
+                  handleChange('disbursementAccount', e.target.value);
+                }
+              }}
+            >
+              <option value="">Select Disbursement Account</option>
+              {filteredAccounts.map(([currency, account]) => (
+                <option key={currency} value={account}>
+                  {currency}: {account}
+                </option>
+              ))}
+              <option value="manual">Other (Enter manually)</option>
+            </select>
+          ) : (
+            <input
+              type="text"
+              id="disbursementAccount"
+              value={staffLoanData.disbursementAccount}
+              onChange={(e) => handleChange('disbursementAccount', e.target.value)}
+            />
+          )}
+        </div>
+
+        <div className="sla-navigation-buttons">
+          <button className="sla-gradient-button" onClick={() => setCurrentStep(1)}>Previous</button>
+          <button className="sla-gradient-button" onClick={submitStep2}>Next</button>
+        </div>
       </div>
-      <div className="sla-form-group">
-        <label htmlFor="repaymentAccount">Repayment Account:</label>
-        <input
-          type="text"
-          id="repaymentAccount"
-          value={staffLoanData.repaymentAccount}
-          onChange={(e) => handleChange('repaymentAccount', e.target.value)}
-        />
-      </div>
-      <div className="sla-form-group">
-        <label htmlFor="disbursementAccount">Disbursement Account:</label>
-        <input
-          type="text"
-          id="disbursementAccount"
-          value={staffLoanData.disbursementAccount}
-          onChange={(e) => handleChange('disbursementAccount', e.target.value)}
-        />
-      </div>
-      <div className="sla-navigation-buttons">
-        <button className="sla-gradient-button" onClick={() => setCurrentStep(1)}>Previous</button>
-        <button className="sla-gradient-button" onClick={submitStep2}>Next</button>
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderStep3 = () => (
     <div>
@@ -660,8 +885,11 @@ const StaffLoanApplicationForm = () => {
         </h3>
         <hr className="sla-separator" />
         <p><strong>Loan Amount:</strong> {staffLoanData.loanAmount}</p>
+        <p><strong>Tenure (Months):</strong> {staffLoanData.tenureDuration}</p>
         <p><strong>Repayment Account:</strong> {staffLoanData.repaymentAccount}</p>
         <p><strong>Disbursement Account:</strong> {staffLoanData.disbursementAccount}</p>
+        <p><strong>Repayment Schedule:</strong> {staffLoanData.repaymentSchedule}</p>
+        <p><strong>Currency ID:</strong> {staffLoanData.currencyId}</p>
       </div>
       <div className="sla-review-section">
         <h3>
@@ -774,7 +1002,6 @@ const StaffLoanApplicationForm = () => {
           </div>
         )}
       </div>
-      {/* Separator below the steps */}
       <div className="sla-separator" />
       <div className="sla-form-content">
         {renderCurrentStep()}

@@ -42,7 +42,7 @@ const ResetPassword = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/v1/api/set-new-password', {
+      const response = await axios.post('http://10.132.229.140:8080/v1/api/set-new-password', {
         username,
         newPassword: password,
       });

@@ -123,7 +123,7 @@ const AllLoans = () => {
       console.error('Invalid staffId. Cannot fetch loans.');
       return;
     }
-    fetch(`http://localhost:8080/v1/api/staff-loans/staff/${staffId}/details`, {
+    fetch(`http://10.132.229.140:8080/v1/api/staff-loans/staff/${staffId}/details`, {
       headers: { Authorization: `Bearer ${sessionToken}` }
     })
       .then(response => {
@@ -149,7 +149,7 @@ const AllLoans = () => {
   useEffect(() => {
     if (!staffId) return;
     const pollLoanStatuses = () => {
-      fetch(`http://localhost:8080/v1/api/staff-loans/staff/${staffId}/details`, {
+      fetch(`http://10.132.229.140:8080/v1/api/staff-loans/staff/${staffId}/details`, {
         headers: { Authorization: `Bearer ${sessionToken}` }
       })
         .then(response => {
@@ -201,7 +201,7 @@ const AllLoans = () => {
     setSelectedLoanDetails(null);
     setModalCompleteness(0);
 
-    fetch(`http://localhost:8080/v1/api/staff-loans/loan-details/${applicationId}`, {
+    fetch(`http://10.132.229.140:8080/v1/api/staff-loans/loan-details/${applicationId}`, {
       headers: { Authorization: `Bearer ${sessionToken}` }
     })
       .then(response => {
